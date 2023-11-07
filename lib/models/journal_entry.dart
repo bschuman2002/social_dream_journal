@@ -13,4 +13,16 @@ class JournalEntry {
       required this.privacy,
       required this.sleepScore,
       required this.text});
+
+  factory JournalEntry.fromJson(Map<String, dynamic> json) {
+    return JournalEntry(
+      id: json['id'],
+      userId: json['userID'],
+      date: json['date'],
+      privacy: json['isPublic'],
+      sleepScore: json['sleepScore'],
+      text: json['text'],
+    );
+  }
+
 }

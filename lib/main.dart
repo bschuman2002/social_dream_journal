@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_dream_journal/journal_entry_view.dart';
+import 'package:social_dream_journal/views/journal_entry_view.dart';
 
 void main() {
   runApp(const MyApp());

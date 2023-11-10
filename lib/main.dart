@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_dream_journal/views/journal_entry_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -116,7 +117,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => journal_entry_view()),
+          );
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

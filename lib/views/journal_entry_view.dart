@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:social_dream_journal/viewmodels/journal_entry_view_model.dart';
+
+import '../models/journal_entry.dart';
+import '../viewmodels/journal_entry_list_view_model.dart';
 
 class journal_entry_view extends StatelessWidget {
+  JournalEntryViewModel entry;
+
+  journal_entry_view({required this.entry});
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,7 +21,7 @@ class journal_entry_view extends StatelessWidget {
             SizedBox(height: 40,),
             _journalTitleDate(),
             SizedBox(height: 5,),
-            _username(),
+            _username(context),
             SizedBox(height: 40,),
             _entryText(),
             SizedBox(height: 40,),
@@ -31,7 +42,7 @@ class journal_entry_view extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 40.0),
                     child: Text(
-                      'Entry is currently private',
+                      'Entry is currently ${entry.privacy ? "public" : "private"}',
                       style: TextStyle(
                         fontSize: 16
                       )
@@ -75,7 +86,7 @@ class journal_entry_view extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 40.0),
                 child:
                   Text(
-                    'Sleep score: 6',
+                    'Sleep score: ${entry.sleepScore}',
                     style: TextStyle(
                       color: Colors.black,
                       decoration: TextDecoration.underline,
@@ -94,10 +105,7 @@ class journal_entry_view extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 40.0, right:  5.0),
                 child: Text(
-                    "While I believe I had some dreams last night, I couldn't"
-                        " remember any of them upon waking up.  However, I "
-                        "think I had a nightmare earlier in the night as I remember"
-                        " waking up briefly in the middle of the night.",
+                    '${entry.text}',
                   style: TextStyle(
                     fontSize: 20
                   ),
@@ -107,13 +115,13 @@ class journal_entry_view extends StatelessWidget {
           );
   }
 
-  Row _username() {
+  Row _username(BuildContext context) {
     return Row(
             children: [
               Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                      'bschuman02',
+                      Provider.of<JournalListProvider>(context).getUsernameById(entry.userId),
                       style: TextStyle(
                           color: Colors.grey,
                           decoration: TextDecoration.underline,
@@ -129,7 +137,7 @@ class journal_entry_view extends StatelessWidget {
     return Center (
             child:
             Text(
-                'Journal Entry 9/25/2023',
+                'Journal Entry ${DateFormat('MM/dd/yyyy').format(entry.date)}',
                 style: TextStyle(
                     fontSize: 29,
                     fontWeight: FontWeight.w600

@@ -36,7 +36,9 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<JournalEntryViewModel> userEntries =
-        Provider.of<AppProvider>(context).userJournalViewModels;
+        Provider.of<JournalListProvider>(context).userJournalViewModels
+            .toList()
+          ..sort((a, b) => b.date.compareTo(a.date));
 
     return Scaffold(
         body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -115,7 +117,15 @@ class HomeView extends StatelessWidget {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
+              GestureDetector(onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => 
+                      journal_entry_view(entry: journalEntry)
+                  ),
+                );
+              },
+              child: Padding(
                   padding: EdgeInsets.only(left: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -133,6 +143,8 @@ class HomeView extends StatelessWidget {
                       )
                     ],
                   )),
+              ),
+
               SizedBox(height: 4),
               Column(children: [
                 Padding(
@@ -147,14 +159,6 @@ class HomeView extends StatelessWidget {
               // Add other details you want to display
             ],
           ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => journal_entry_view(),
-              ),
-            );
-          },
         );
       },
     );

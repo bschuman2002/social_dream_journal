@@ -34,23 +34,26 @@ void main() {
 
   //Example User
   User currUser = User(id: 1, username: "johnDoe1", password: "123", following: [], followers: []);
-  runApp(MyApp(currentUser: currUser, allEntries: journalEntries));
+  List<User> allUsers = [];
+  allUsers.add(currUser);
+  runApp(MyApp(currentUser: currUser, allEntries: journalEntries, allUsers: allUsers));
 }
 
 class MyApp extends StatelessWidget {
   final User currentUser;
   final List<JournalEntry> allEntries;
-  MyApp({required this.currentUser, required this.allEntries});
+  final List<User> allUsers;
+  MyApp({required this.currentUser, required this.allEntries, required this.allUsers});
 
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) {
-        AppProvider appProvider = AppProvider();
+        JournalListProvider appProvider = JournalListProvider();
 
         // Initialize the AppProvider
-        appProvider.initialize(currentUser, allEntries);
+        appProvider.initialize(currentUser, allEntries, allUsers);
 
         return appProvider;
       },

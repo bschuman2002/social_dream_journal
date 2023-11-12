@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_dream_journal/views/create_journal_entry_view.dart';
 import 'package:social_dream_journal/views/journal_entry_view.dart';
 
 void main() {
@@ -113,6 +114,12 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            ElevatedButton(onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => create_journal_entry_view()),
+              );
+            }, child: Text("create entry"))
           ],
         ),
       ),

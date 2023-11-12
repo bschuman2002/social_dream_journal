@@ -18,11 +18,10 @@ class JournalEntry {
     return JournalEntry(
       id: json['id'],
       userId: json['userID'],
-      date: json['date'],
-      privacy: json['isPublic'],
+      date: DateTime.parse(json['date']),
+      privacy:  json['privacy'] == "true",
       sleepScore: json['sleepScore'],
       text: json['text'],
     );
   }
-
 }

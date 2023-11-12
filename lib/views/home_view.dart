@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_dream_journal/views/create_journal_entry_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -8,7 +9,7 @@ class HomeView extends StatelessWidget {
     return Scaffold(
         body: Column(children: [
       const SizedBox(height: 50),
-      _homeTitle(),
+      _homeTitle(context),
       const SizedBox(height: 10),
       const Row(children: [
         Padding(
@@ -20,23 +21,30 @@ class HomeView extends StatelessWidget {
     ]));
   }
 
-  Row _homeTitle() {
-    return const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Text('Home',
-                  style: TextStyle(color: Colors.black, fontSize: 30))),
-          Column(children: [
-            Padding(
-                padding: EdgeInsets.only(right: 20),
-                child: Icon(Icons.add_circle_outline, size: 36)),
-            Padding(
-                padding: EdgeInsets.only(right: 10),
-                child: Text("New Entry", style: TextStyle(fontSize: 20)))
-          ])
-        ]);
+  Row _homeTitle(BuildContext context) {
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Text('Home',
+              style: TextStyle(color: Colors.black, fontSize: 30))),
+      Column(children: [
+        Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: IconButton(
+              icon: Icon(Icons.add_circle_outline, size: 36),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => create_journal_entry_view()),
+                );
+              },
+            )),
+        Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: Text("New Entry", style: TextStyle(fontSize: 20)))
+      ])
+    ]);
   }
 
   Padding _buildJournalEntries() {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_dream_journal/views/home_view.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -36,3 +37,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

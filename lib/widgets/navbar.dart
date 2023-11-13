@@ -37,7 +37,7 @@ class _NavBarState extends State<NavBar> {
       onDestinationSelected: (int index) {
         setState(() {
           currentPageIndex = index;
-          Navigator.push(context,
+          Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (_) => pages[currentPageIndex]));
         });
       },

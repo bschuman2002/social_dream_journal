@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:social_dream_journal/views/create_journal_entry_view.dart';
 import 'package:social_dream_journal/views/home_view.dart';
 
 class NavBar extends StatefulWidget {

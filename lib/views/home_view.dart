@@ -20,7 +20,7 @@ class HomeView extends StatelessWidget {
           const SizedBox(height: 15),
           _buildJournalEntries(),
         ]),
-        bottomNavigationBar: buildNavBar());
+        bottomNavigationBar: const NavBar(pageIndex: 0));
   }
 
   Row _homeTitle(BuildContext context) {

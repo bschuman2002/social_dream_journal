@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:social_dream_journal/models/journal_entry.dart';
 import 'package:social_dream_journal/viewmodels/journal_entry_view_model.dart';
 import 'package:social_dream_journal/views/create_journal_entry_view.dart';
+import 'package:social_dream_journal/widgets/navbar.dart';
 import '../viewmodels/journal_entry_list_view_model.dart';
 import 'journal_entry_view.dart';
 
@@ -47,8 +48,9 @@ class HomeView extends StatelessWidget {
       _subtitle(),
       Expanded(
         child: _listOfEntries(userEntries),
-      )
-    ]));
+      ),
+    ])
+    bottomNavigationBar: const NavBar(pageIndex: 0)););
   }
 
   Row _homeAndAdd(BuildContext context) {

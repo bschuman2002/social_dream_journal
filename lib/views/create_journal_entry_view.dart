@@ -50,7 +50,7 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
             _submit(),
           ],
         ),
-      )
+      ),
     );
   }
 
@@ -84,31 +84,25 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
 
   Padding _sleepScoreTitle() {
     return Padding(
-              padding: EdgeInsets.only(left: 20.0),
-              child: Row(
-                children: [
-                  Text(
-                      "Sleep Score",
-                      style: TextStyle(
-                        color: Colors.deepPurpleAccent
-                      )
-                  )
-                ],
-              ),
-          );
+      padding: EdgeInsets.only(left: 20.0),
+      child: Row(
+        children: [
+          Text("Sleep Score", style: TextStyle(color: Colors.deepPurpleAccent))
+        ],
+      ),
+    );
   }
 
   Padding _sleepScore() {
     return Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 60, bottom: 20),
-            child: TextField(
-              controller: _sleepscore,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'Enter a number between 1 and 10',
-              ),
-            )
-        );
+        padding: const EdgeInsets.only(left: 16.0, right: 60, bottom: 20),
+        child: TextField(
+          controller: _sleepscore,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            labelText: 'Enter a number between 1 and 10',
+          ),
+        ));
   }
 
   ElevatedButton _submit() {
@@ -214,7 +208,6 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
       ],
     );
   }
-
 }
 
 

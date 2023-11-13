@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:social_dream_journal/views/create_journal_entry_view.dart';
+import 'package:social_dream_journal/widgets/navbar.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -8,17 +9,18 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(children: [
-      const SizedBox(height: 50),
-      _homeTitle(context),
-      const SizedBox(height: 10),
-      const Row(children: [
-        Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Text('Recent Entries', style: TextStyle(fontSize: 25)))
-      ]),
-      const SizedBox(height: 15),
-      _buildJournalEntries(),
-    ]));
+          const SizedBox(height: 50),
+          _homeTitle(context),
+          const SizedBox(height: 10),
+          const Row(children: [
+            Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Text('Recent Entries', style: TextStyle(fontSize: 25)))
+          ]),
+          const SizedBox(height: 15),
+          _buildJournalEntries(),
+        ]),
+        bottomNavigationBar: buildNavBar());
   }
 
   Row _homeTitle(BuildContext context) {

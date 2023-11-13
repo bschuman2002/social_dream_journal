@@ -47,7 +47,7 @@ class HomeView extends StatelessWidget {
       SizedBox(height: 30),
       _subtitle(),
       Expanded(
-        child: _listOfEntries(userEntries),
+        child: _listOfEntries(userEntries,),
       ),
     ]),
     bottomNavigationBar: const NavBar(pageIndex: 0));
@@ -111,7 +111,8 @@ class HomeView extends StatelessWidget {
 
   ListView buildListView(List<JournalEntryViewModel> userEntries) {
     return ListView.builder(
-      itemCount: userEntries.length,
+      scrollDirection: Axis.vertical,
+      itemCount: 4,
       itemBuilder: (context, index) {
         final journalEntry = userEntries[index];
 

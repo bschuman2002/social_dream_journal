@@ -2,7 +2,7 @@ class JournalEntry {
   final int id;
   final int userId;
   final DateTime date;
-  final bool privacy;
+  bool privacy;
   final int sleepScore;
   final String text;
 

@@ -60,14 +60,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<JournalListProvider>(create: (context) {
+        ChangeNotifierProvider<JournalListProvider>(create: (context) {
           JournalListProvider appProvider = JournalListProvider();
 
           appProvider.initialize(currentUser, allEntries);
 
           return appProvider;
         }),
-        Provider<UserProvider>(create: (context) {
+        ChangeNotifierProvider<UserProvider>(create: (context) {
           UserProvider userProvider = UserProvider();
 
           userProvider.initialize(currentUser, allUsers);

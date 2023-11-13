@@ -1,40 +1,86 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:social_dream_journal/models/journal_entry.dart';
+import 'package:social_dream_journal/viewmodels/user_view_model.dart';
 import 'package:social_dream_journal/views/home_view.dart';
-
+import 'package:social_dream_journal/viewmodels/journal_entry_list_view_model.dart';
+import 'package:social_dream_journal/models/user.dart';
 
 void main() {
-  runApp(const MyApp());
+  //Example journal data
+  Map<String, dynamic> jsonEntry = {
+    "id": 1,
+    "userID": 1,
+    "date": "2023-11-12T08:00:00Z",
+    "text": "Last night, I dreamt that I was flying over a magical landscape",
+    "sleepScore": 6,
+    "privacy": "true"
+  };
+
+  Map<String, dynamic> jsonEntry2 = {
+    "id": 2,
+    "userID": 1,
+    "date": "2023-11-11T08:00:00Z",
+    "text": "Last night, I had a very weird dream",
+    "sleepScore": 7,
+    "privacy": "false"
+  };
+
+  JournalEntry journalEntry = JournalEntry.fromJson(jsonEntry);
+  JournalEntry journalEntry2 = JournalEntry.fromJson(jsonEntry2);
+
+  List<JournalEntry> journalEntries = [];
+  journalEntries.add(journalEntry);
+  journalEntries.add(journalEntry2);
+
+  //Example User
+  User currUser = User(
+      id: 1,
+      username: "johnDoe1",
+      password: "123",
+      following: [],
+      followers: []);
+  List<User> allUsers = [];
+  allUsers.add(currUser);
+  runApp(MyApp(
+      currentUser: currUser, allEntries: journalEntries, allUsers: allUsers));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final User currentUser;
+  final List<JournalEntry> allEntries;
+  final List<User> allUsers;
 
-  // This widget is the root of your application.
+  MyApp(
+      {required this.currentUser,
+      required this.allEntries,
+      required this.allUsers});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: HomeView(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<JournalListProvider>(create: (context) {
+          JournalListProvider appProvider = JournalListProvider();
+
+          appProvider.initialize(currentUser, allEntries);
+
+          return appProvider;
+        }),
+        ChangeNotifierProvider<UserProvider>(create: (context) {
+          UserProvider userProvider = UserProvider();
+
+          userProvider.initialize(currentUser, allUsers);
+
+          return userProvider;
+        })
+      ],
+      child: MaterialApp(
+          home: HomeView(),
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          )),
     );
   }
 }
-

@@ -49,8 +49,8 @@ class HomeView extends StatelessWidget {
       Expanded(
         child: _listOfEntries(userEntries),
       ),
-    ])
-    bottomNavigationBar: const NavBar(pageIndex: 0)););
+    ]),
+    bottomNavigationBar: const NavBar(pageIndex: 0));
   }
 
   Row _homeAndAdd(BuildContext context) {

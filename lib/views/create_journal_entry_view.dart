@@ -9,6 +9,8 @@ import 'package:social_dream_journal/viewmodels/journal_entry_list_view_model.da
 import 'package:social_dream_journal/viewmodels/journal_entry_view_model.dart';
 import 'package:social_dream_journal/views/journal_entry_view.dart';
 
+import '../widgets/navbar.dart';
+
 class create_journal_entry_view extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -51,6 +53,7 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
           ],
         ),
       ),
+      bottomNavigationBar: const NavBar(pageIndex: 0),
     );
   }
 

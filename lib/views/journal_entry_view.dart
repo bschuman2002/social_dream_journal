@@ -6,6 +6,7 @@ import 'package:social_dream_journal/viewmodels/user_view_model.dart';
 
 import '../models/journal_entry.dart';
 import '../viewmodels/journal_entry_list_view_model.dart';
+import '../widgets/navbar.dart';
 
 class journal_entry_view extends StatelessWidget {
   JournalEntryViewModel entry;
@@ -31,7 +32,7 @@ class journal_entry_view extends StatelessWidget {
             _shareEntry()
           ],
         ),
-      bottomNavigationBar: buildBottomAppBar(context),
+      bottomNavigationBar: const NavBar(pageIndex: 0),
     );
   }
 

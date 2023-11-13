@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_dream_journal/models/journal_entry.dart';
+import 'package:social_dream_journal/viewmodels/user_view_model.dart';
 import 'package:social_dream_journal/views/home_view.dart';
 import 'package:social_dream_journal/viewmodels/journal_entry_list_view_model.dart';
 import 'package:social_dream_journal/models/user.dart';
@@ -33,38 +34,53 @@ void main() {
   journalEntries.add(journalEntry2);
 
   //Example User
-  User currUser = User(id: 1, username: "johnDoe1", password: "123", following: [], followers: []);
+  User currUser = User(
+      id: 1,
+      username: "johnDoe1",
+      password: "123",
+      following: [],
+      followers: []);
   List<User> allUsers = [];
   allUsers.add(currUser);
-  runApp(MyApp(currentUser: currUser, allEntries: journalEntries, allUsers: allUsers));
+  runApp(MyApp(
+      currentUser: currUser, allEntries: journalEntries, allUsers: allUsers));
 }
 
 class MyApp extends StatelessWidget {
   final User currentUser;
   final List<JournalEntry> allEntries;
   final List<User> allUsers;
-  MyApp({required this.currentUser, required this.allEntries, required this.allUsers});
 
+  MyApp(
+      {required this.currentUser,
+      required this.allEntries,
+      required this.allUsers});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) {
-        JournalListProvider appProvider = JournalListProvider();
+    return MultiProvider(
+      providers: [
+        Provider<JournalListProvider>(create: (context) {
+          JournalListProvider appProvider = JournalListProvider();
 
-        // Initialize the AppProvider
-        appProvider.initialize(currentUser, allEntries, allUsers);
+          appProvider.initialize(currentUser, allEntries);
 
-        return appProvider;
-      },
+          return appProvider;
+        }),
+        Provider<UserProvider>(create: (context) {
+          UserProvider userProvider = UserProvider();
+
+          userProvider.initialize(allUsers);
+
+          return userProvider;
+        })
+      ],
       child: MaterialApp(
-        home: HomeView(),
-        theme: ThemeData(
+          home: HomeView(),
+          theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
-          )
-      ),
+          )),
     );
   }
 }
-

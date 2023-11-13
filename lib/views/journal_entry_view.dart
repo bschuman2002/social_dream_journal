@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:social_dream_journal/viewmodels/journal_entry_view_model.dart';
+import 'package:social_dream_journal/viewmodels/user_view_model.dart';
 
 import '../models/journal_entry.dart';
 import '../viewmodels/journal_entry_list_view_model.dart';
@@ -121,7 +122,7 @@ class journal_entry_view extends StatelessWidget {
               Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
-                      Provider.of<JournalListProvider>(context).getUsernameById(entry.userId),
+                      Provider.of<UserProvider>(context).getUsernameById(entry.userId),
                       style: TextStyle(
                           color: Colors.grey,
                           decoration: TextDecoration.underline,

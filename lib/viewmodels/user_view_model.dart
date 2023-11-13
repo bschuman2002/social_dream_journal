@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:social_dream_journal/models/user.dart';
 
 class UserViewModel {
@@ -23,5 +24,21 @@ class UserViewModel {
 
   List<User> get followers {
     return user.followers;
+  }
+}
+
+class UserProvider extends ChangeNotifier {
+  List<UserViewModel> _allUsers = [];
+
+  void initialize(List<User> allUsers) {
+    allUsers.map((user) => _allUsers.add(UserViewModel(user: user))).toList();
+
+    notifyListeners();
+  }
+
+  String getUsernameById(int userId) {
+    // Find the user with the given ID and return the username
+    UserViewModel? user = _allUsers.firstWhere((user) => user.id == userId, orElse: () => UserViewModel(user: User(id: 0, username: 'error', password: "error", following: [], followers: [])) );
+    return user?.username ?? 'Unknown'; // Return 'Unknown' if the user is not found
   }
 }

@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
         Provider<UserProvider>(create: (context) {
           UserProvider userProvider = UserProvider();
 
-          userProvider.initialize(allUsers);
+          userProvider.initialize(currentUser, allUsers);
 
           return userProvider;
         })

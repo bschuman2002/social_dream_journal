@@ -29,8 +29,10 @@ class UserViewModel {
 
 class UserProvider extends ChangeNotifier {
   List<UserViewModel> _allUsers = [];
+  UserViewModel? _currentUser;
 
-  void initialize(List<User> allUsers) {
+  void initialize(User currentUser, List<User> allUsers) {
+    _currentUser = UserViewModel(user: currentUser);
     allUsers.map((user) => _allUsers.add(UserViewModel(user: user))).toList();
 
     notifyListeners();

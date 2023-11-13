@@ -1,6 +1,13 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:social_dream_journal/models/journal_entry.dart';
+import 'package:social_dream_journal/viewmodels/journal_entry_list_view_model.dart';
+import 'package:social_dream_journal/viewmodels/journal_entry_view_model.dart';
+import 'package:social_dream_journal/views/journal_entry_view.dart';
 
 class create_journal_entry_view extends StatefulWidget {
   @override
@@ -13,6 +20,7 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
   TextEditingController dateInput = TextEditingController();
   TextEditingController _Textcontroller = TextEditingController();
   TextEditingController _sleepscore = TextEditingController();
+  bool checkboxValue = false;
 
   @override
   void initState() {
@@ -51,7 +59,24 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
             padding: const EdgeInsets.only(left: 10, bottom: 15),
             child: Row(
                 children: [
-                  CheckboxPrivacy()
+              Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Checkbox(
+                  value: checkboxValue,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      checkboxValue = value!;
+                    });
+                  },
+                ),
+                Text(
+                  checkboxValue
+                      ? 'This Dream will be Public'
+                      : 'This Dream will be Private',
+                ),
+              ],
+            )
                 ]
             ),
           );
@@ -89,9 +114,19 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
   ElevatedButton _submit() {
     return ElevatedButton(
       onPressed: () {
-        setState(() {
-          _Textcontroller.notifyListeners();
-        });
+        JournalEntry newEntry = JournalEntry(
+            id: Provider.of<JournalListProvider>(context, listen: false).allEntries.length + 1,
+            userId: Provider.of<JournalListProvider>(context, listen: false).currentUser.id,
+            date: DateTime.parse(dateInput.text),
+            privacy: checkboxValue,
+            sleepScore: int.parse(_sleepscore.text),
+            text: _Textcontroller.text);
+        Provider.of<JournalListProvider>(context, listen: false).addEntry(newEntry);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => journal_entry_view(entry: JournalEntryViewModel(journalEntry: newEntry))),
+          );
       },
       child: Text("Submit Dream"),
     );
@@ -182,35 +217,4 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
 
 }
 
-class CheckboxPrivacy extends StatefulWidget {
-  const CheckboxPrivacy({Key? key}) : super(key: key);
 
-  @override
-  _CheckboxState createState() => _CheckboxState();
-}
-
-class _CheckboxState extends State<CheckboxPrivacy> {
-  bool isChecked = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Checkbox(
-          value: isChecked,
-          onChanged: (bool? value) {
-            setState(() {
-              isChecked = value!;
-            });
-          },
-        ),
-        Text(
-          isChecked
-              ? 'This Dream will be Public'
-              : 'This Dream will be Private',
-        ),
-      ],
-    );
-  }
-}

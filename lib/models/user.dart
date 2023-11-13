@@ -2,8 +2,8 @@ class User {
   final int id;
   final String username;
   final String password;
-  final List<User> following;
-  final List<User> followers;
+  List<User> following;
+  List<User> followers;
 
   User(
       {required this.id,

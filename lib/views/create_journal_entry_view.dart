@@ -32,57 +32,57 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(context),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 40,
+    return Hero(
+        tag: "create",
+        child: Scaffold(
+          appBar: _appBar(context),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 40,
+                ),
+                _title(),
+                _dateInput(context),
+                _dreamDetails(),
+                SizedBox(
+                  height: 10,
+                ),
+                _sleepScoreTitle(),
+                _sleepScore(),
+                _checkbox(),
+                _submit(),
+              ],
             ),
-            _title(),
-            _dateInput(context),
-            _dreamDetails(),
-            SizedBox(
-              height: 10,
-            ),
-            _sleepScoreTitle(),
-            _sleepScore(),
-            _checkbox(),
-            _submit(),
-          ],
-        ),
-      ),
-      bottomNavigationBar: const NavBar(pageIndex: 0),
-    );
+          ),
+          bottomNavigationBar: const NavBar(pageIndex: 0),
+        ));
   }
 
   Padding _checkbox() {
     return Padding(
-            padding: const EdgeInsets.only(left: 10, bottom: 15),
-            child: Row(
-                children: [
-              Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Checkbox(
-                  value: checkboxValue,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      checkboxValue = value!;
-                    });
-                  },
-                ),
-                Text(
-                  checkboxValue
-                      ? 'This Dream will be Public'
-                      : 'This Dream will be Private',
-                ),
-              ],
-            )
-                ]
+      padding: const EdgeInsets.only(left: 10, bottom: 15),
+      child: Row(children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Checkbox(
+              value: checkboxValue,
+              onChanged: (bool? value) {
+                setState(() {
+                  checkboxValue = value!;
+                });
+              },
             ),
-          );
+            Text(
+              checkboxValue
+                  ? 'This Dream will be Public'
+                  : 'This Dream will be Private',
+            ),
+          ],
+        )
+      ]),
+    );
   }
 
   Padding _sleepScoreTitle() {
@@ -112,18 +112,25 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
     return ElevatedButton(
       onPressed: () {
         JournalEntry newEntry = JournalEntry(
-            id: Provider.of<JournalListProvider>(context, listen: false).allEntries.length + 1,
-            userId: Provider.of<JournalListProvider>(context, listen: false).currentUser.id,
+            id: Provider.of<JournalListProvider>(context, listen: false)
+                    .allEntries
+                    .length +
+                1,
+            userId: Provider.of<JournalListProvider>(context, listen: false)
+                .currentUser
+                .id,
             date: DateTime.parse(dateInput.text),
             privacy: checkboxValue,
             sleepScore: int.parse(_sleepscore.text),
             text: _Textcontroller.text);
-        Provider.of<JournalListProvider>(context, listen: false).addEntry(newEntry);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => journal_entry_view(entry: JournalEntryViewModel(journalEntry: newEntry))),
-          );
+        Provider.of<JournalListProvider>(context, listen: false)
+            .addEntry(newEntry);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => journal_entry_view(
+                  entry: JournalEntryViewModel(journalEntry: newEntry))),
+        );
       },
       child: Text("Submit Dream"),
     );
@@ -202,15 +209,13 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
 
   AppBar _appBar(BuildContext context) {
     return AppBar(
-      actions: [
-        IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_back))
-      ],
-    );
+        // actions: [
+        //   IconButton(
+        //       onPressed: () {
+        //         Navigator.pop(context);
+        //       },
+        //       icon: Icon(Icons.arrow_back))
+        // ],
+        );
   }
 }
-
-

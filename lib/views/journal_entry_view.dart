@@ -151,11 +151,7 @@ class journal_entry_view extends StatelessWidget {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      actions: [
-        IconButton(onPressed: () {
-          Navigator.pop(context);
-        }, icon: Icon(Icons.arrow_back))
-      ],
+
     );
   }
 

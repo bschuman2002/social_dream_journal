@@ -202,13 +202,13 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
 
   AppBar _appBar(BuildContext context) {
     return AppBar(
-      actions: [
-        IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_back))
-      ],
+      // actions: [
+      //   IconButton(
+      //       onPressed: () {
+      //         Navigator.pop(context);
+      //       },
+      //       icon: Icon(Icons.arrow_back))
+      // ],
     );
   }
 }

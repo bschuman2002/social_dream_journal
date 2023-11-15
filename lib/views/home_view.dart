@@ -112,7 +112,7 @@ class HomeView extends StatelessWidget {
   ListView buildListView(List<JournalEntryViewModel> userEntries) {
     return ListView.builder(
       scrollDirection: Axis.vertical,
-      itemCount: 4,
+      itemCount: userEntries.length < 4 ? userEntries.length : 4,
       itemBuilder: (context, index) {
         final journalEntry = userEntries[index];
 

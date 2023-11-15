@@ -1,16 +1,11 @@
-# social_dream_journal
+# Social Dream Journal
+## How to Run
+1. Navigate to directory where package was extracted ex: `cd dev/social_dream_journal`
+2. Start emulator via vscode (ex. If on Mac, launch Xcode IPhone Simulator
+3. Execute `flutter run` command in terminal, or start app via gui
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Navigate App
+1. For Deliverable 3, you are automatically logged in as user with id 1.  For final deliverable you will have to log in manually.
+2. On the home view, you can view up to your past 4 journal entries.  Use the bottom navigation bar to navigate around the app. Note: for delivaerable 3, all navigation items lead to home page as other key tasks aren't implemented.
+3. You can also go to an individual journal entry from the home view by selecting one of the journal entries that are presented.
+4. Select "Add Entry" button to use a form to add journal entries. Submitting this form will lead to the individual journal entry that you just created.

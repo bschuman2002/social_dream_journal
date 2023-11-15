@@ -1,7 +1,7 @@
 # Social Dream Journal
 ## How to Run
 1. Navigate to directory where package was extracted ex: `cd dev/social_dream_journal`
-2. Start emulator via vscode (ex. If on Mac, launch Xcode IPhone Simulator
+2. Start emulator via vscode (ex. If on Mac, launch Xcode IPhone Simulator)
 3. Execute `flutter run` command in terminal, or start app via gui
 
 ## Navigate App

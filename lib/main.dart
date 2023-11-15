@@ -12,7 +12,10 @@ void main() {
     "id": 1,
     "userID": 1,
     "date": "2023-11-12T08:00:00Z",
-    "text": "Last night, I dreamt that I was flying over a magical landscape",
+    "text": "I found myself in the backyard of my childhood home, surrounded by "
+        "lush greenery and the familiar sights of my youth. The air felt crisp, "
+        "and there was a gentle breeze. As I walked towards the old oak tree, "
+        "I noticed a peculiar door embedded in its trunk.",
     "sleepScore": 6,
     "privacy": "true"
   };
@@ -21,7 +24,8 @@ void main() {
     "id": 2,
     "userID": 1,
     "date": "2023-11-11T08:00:00Z",
-    "text": "Last night, I had a very weird dream",
+    "text": "In this dream, I found myself navigating through a bustling city"
+        " that seemed both futuristic and slightly dystopian.",
     "sleepScore": 7,
     "privacy": "false"
   };
@@ -76,6 +80,7 @@ class MyApp extends StatelessWidget {
         })
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
           home: HomeView(),
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

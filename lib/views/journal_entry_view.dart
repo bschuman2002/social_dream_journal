@@ -128,6 +128,7 @@ class journal_entry_view extends StatelessWidget {
               style: TextStyle(
                   color: Colors.grey,
                   decoration: TextDecoration.underline,
+                  decorationColor: Colors.grey,
                   fontSize: 16
               )
           ),

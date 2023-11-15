@@ -17,9 +17,15 @@ class HomeView extends StatelessWidget {
         now.month == date.month &&
         now.day == date.day) {
       return 'Today';
-    } else if (now.subtract(Duration(days: 1)).year == date.year &&
-        now.subtract(Duration(days: 1)).month == date.month &&
-        now.subtract(Duration(days: 1)).day == date.day) {
+    } else if (now
+        .subtract(Duration(days: 1))
+        .year == date.year &&
+        now
+            .subtract(Duration(days: 1))
+            .month == date.month &&
+        now
+            .subtract(Duration(days: 1))
+            .day == date.day) {
       return 'Yesterday';
     } else {
       return DateFormat('MMMM d, yyyy').format(date);
@@ -37,44 +43,66 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<JournalEntryViewModel> userEntries =
-        Provider.of<JournalListProvider>(context).userJournalViewModels
-            .toList()
-          ..sort((a, b) => b.date.compareTo(a.date));
+    Provider
+        .of<JournalListProvider>(context)
+        .userJournalViewModels
+        .toList()
+      ..sort((a, b) => b.date.compareTo(a.date));
 
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+        floatingActionButton: _FloatingActionButton(context),
         body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      _homeAndAdd(context),
-      SizedBox(height: 30),
-      _subtitle(),
-      Expanded(
-        child: _listOfEntries(userEntries,),
-      ),
-    ]),
-    bottomNavigationBar: const NavBar(pageIndex: 0));
+          _homeAndAdd(context),
+          SizedBox(height: 30),
+          _subtitle(),
+          Expanded(
+            child: _listOfEntries(userEntries,),
+          ),
+        ]),
+        bottomNavigationBar: const NavBar(pageIndex: 0));
+  }
+
+  FloatingActionButton _FloatingActionButton(BuildContext context) {
+    return FloatingActionButton(
+        heroTag: "create",
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => create_journal_entry_view()),
+            );
+          },
+        child: Icon(Icons.add, size: 36,),
+        hoverElevation: 50,
+      );
   }
 
   Row _homeAndAdd(BuildContext context) {
     return Row(children: [
       _homeTitleList(),
-      Padding(
-          padding: EdgeInsets.only(left: 190.0, top: 60.0),
-          child: Column(children: [
-            Padding(
-                padding: EdgeInsets.only(right: 20),
-                child: IconButton(
-                  icon: Icon(Icons.add_circle_outline, size: 36),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => create_journal_entry_view()),
-                    );
-                  },
-                )),
-            Padding(
-                padding: EdgeInsets.only(right: 10),
-                child: Text("New Entry", style: TextStyle(fontSize: 20)))
-          ]))
+      // Padding(
+      //     padding: EdgeInsets.only(left: 190.0, top: 60.0),
+      //     child: Column(children: [
+      //       Padding(
+      //           padding: EdgeInsets.only(right: 30),
+      //           child:
+      //           IconButton(
+      //             icon: Icon(Icons.add_circle_outline, size: 36),
+      //             onPressed: () {
+      //               Navigator.push(
+      //                 context,
+      //                 MaterialPageRoute(
+      //                     builder: (context) => create_journal_entry_view()),
+      //               );
+      //             },
+      //           )
+      //       ),
+            // Padding(
+            //     padding: EdgeInsets.only(right: 10),
+            //     child: Text("Add Entry", style: TextStyle(fontSize: 20)))
+          //])
+     // )
     ]);
   }
 
@@ -103,8 +131,8 @@ class HomeView extends StatelessWidget {
       padding: EdgeInsets.only(top: 0),
       child: userEntries.isEmpty
           ? Center(
-              child: Text('No journal entries yet.'),
-            )
+        child: Text('No journal entries yet.'),
+      )
           : buildListView(userEntries),
     );
   }
@@ -123,29 +151,29 @@ class HomeView extends StatelessWidget {
               GestureDetector(onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => 
+                  MaterialPageRoute(builder: (context) =>
                       journal_entry_view(entry: journalEntry)
                   ),
                 );
               },
-              child: Padding(
-                  padding: EdgeInsets.only(left: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(formatJournalDate(journalEntry.date),
-                          style: const TextStyle(
-                              color: Colors.black,
-                              decoration: TextDecoration.underline,
-                              fontSize: 25)),
-                      Padding(
-                        padding: EdgeInsets.only(right: 20),
-                        child: Text(formatPrivacy(journalEntry.privacy),
+                child: Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(formatJournalDate(journalEntry.date),
                             style: const TextStyle(
-                                color: Colors.black, fontSize: 15)),
-                      )
-                    ],
-                  )),
+                                color: Colors.black,
+                                decoration: TextDecoration.underline,
+                                fontSize: 25)),
+                        Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Text(formatPrivacy(journalEntry.privacy),
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 15)),
+                        )
+                      ],
+                    )),
               ),
 
               SizedBox(height: 4),

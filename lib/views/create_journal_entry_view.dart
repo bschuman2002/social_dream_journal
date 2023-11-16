@@ -132,7 +132,7 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
                   entry: JournalEntryViewModel(journalEntry: newEntry))),
         );
       },
-      child: Text("Submit Dream"),
+      child: Text("Create Dream Entry"),
     );
   }
 

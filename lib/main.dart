@@ -46,6 +46,7 @@ void main() {
       followers: []);
   List<User> allUsers = [];
   allUsers.add(currUser);
+
   runApp(MyApp(
       currentUser: currUser, allEntries: journalEntries, allUsers: allUsers));
 }

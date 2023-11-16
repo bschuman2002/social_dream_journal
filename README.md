@@ -9,3 +9,9 @@
 2. On the home view, you can view up to your past 4 journal entries.  Use the bottom navigation bar to navigate around the app. Note: for delivaerable 3, all navigation items lead to home page as other key tasks aren't implemented.
 3. You can also go to an individual journal entry from the home view by selecting one of the journal entries that are presented.
 4. Select "Add Entry" button to use a form to add journal entries. Submitting this form will lead to the individual journal entry that you just created.
+
+
+## Deliverable 3
+For deliverable 3, we implemented the main task of being able to create journal entries and view the past few journal entries on the home feed. 
+You can navigate from the home view to the "add journal entry" page to add new journal entries.  The app is pre populated with some sample data, but you can add more.
+The bottom navigation bar was also implemented as part of this deliverable.  Currently, each nav bar item links to the home page, but they will link to the other main navigation pages when they are implemented for the final deliverable. 

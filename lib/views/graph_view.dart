@@ -104,6 +104,9 @@ class TrendLineChart extends StatelessWidget {
               ),
             ],
             lineTouchData: LineTouchData(
+              touchTooltipData: LineTouchTooltipData(
+                  getTooltipItems: (touchedSpots) =>
+                      touchedSpots.map((spot) => null).toList()),
               touchCallback: (event, touchResponse) {
                 if (event is FlTapUpEvent) {
                   if (touchResponse?.lineBarSpots != null) {

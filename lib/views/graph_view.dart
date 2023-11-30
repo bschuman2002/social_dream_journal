@@ -60,9 +60,15 @@ class TrendLineChart extends StatelessWidget {
                   sideTitles: SideTitles(
                 showTitles: true,
                 reservedSize: 40,
-                interval: (data.last.x.millisecondsSinceEpoch.toDouble() -
-                        data.first.x.millisecondsSinceEpoch.toDouble()) /
-                    4,
+                interval: 86400000 >
+                        (data.last.x.millisecondsSinceEpoch.toDouble() -
+                                data.first.x.millisecondsSinceEpoch
+                                    .toDouble()) /
+                            4
+                    ? 86400000
+                    : (data.last.x.millisecondsSinceEpoch.toDouble() -
+                            data.first.x.millisecondsSinceEpoch.toDouble()) /
+                        4,
                 // You can customize the format and appearance further if needed
                 getTitlesWidget: (value, meta) {
                   final date =

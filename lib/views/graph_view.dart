@@ -44,6 +44,7 @@ class TrendLineChart extends StatelessWidget {
         padding: const EdgeInsets.only(top: 0, right: 30, bottom: 16, left: 16),
         child: LineChart(
           LineChartData(
+            backgroundColor: Colors.purple.shade100,
             gridData: FlGridData(show: false),
             titlesData: FlTitlesData(
               topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -66,7 +67,7 @@ class TrendLineChart extends StatelessWidget {
                 getTitlesWidget: (value, meta) {
                   final date =
                       DateTime.fromMillisecondsSinceEpoch(value.toInt());
-                  if (value == meta.min) {
+                  if (value == meta.min || value == meta.max) {
                     return Container();
                   }
                   return Padding(
@@ -74,7 +75,7 @@ class TrendLineChart extends StatelessWidget {
                       child: Text(
                         '${date.month}/${date.day}',
                         style: TextStyle(
-                          color: Color.fromARGB(255, 92, 103, 222),
+                          color: Colors.blue.shade900,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -86,12 +87,13 @@ class TrendLineChart extends StatelessWidget {
               show: true,
               border: Border.all(color: const Color(0xff37434d), width: 1),
             ),
-            minX: data.first.x.millisecondsSinceEpoch.toDouble(),
-            maxX: data.last.x.millisecondsSinceEpoch.toDouble(),
+            minX: data.first.x.millisecondsSinceEpoch.toDouble() - 86400000,
+            maxX: data.last.x.millisecondsSinceEpoch.toDouble() + 86400000,
             minY: 0,
             maxY: 10,
             lineBarsData: [
               LineChartBarData(
+                color: Colors.blue.shade900,
                 spots: data
                     .map((point) => FlSpot(
                           point.x.millisecondsSinceEpoch.toDouble(),

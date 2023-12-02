@@ -117,7 +117,7 @@ class CreateAccount extends StatelessWidget {
                                           bottom: BorderSide(
                                               color: Color.fromRGBO(
                                                   143, 148, 251, 1)))),
-                                  child: TextField(
+                                  child: TextFormField(
                                     controller: username,
                                     decoration: InputDecoration(
                                         errorText: _usernameExists ? "Username is in use": null,
@@ -147,7 +147,7 @@ class CreateAccount extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.all(8.0),
-                                  child: TextField(
+                                  child: TextFormField(
                                     controller: confirmPassword,
                                     obscureText: true,
                                     decoration: InputDecoration(

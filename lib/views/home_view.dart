@@ -50,7 +50,7 @@ class HomeView extends StatelessWidget {
       ..sort((a, b) => b.date.compareTo(a.date));
 
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
         floatingActionButton: _FloatingActionButton(context),
         body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           _homeAndAdd(context),
@@ -65,6 +65,7 @@ class HomeView extends StatelessWidget {
 
   FloatingActionButton _FloatingActionButton(BuildContext context) {
     return FloatingActionButton(
+      backgroundColor: Color.fromRGBO(143, 148, 251, 1),
         heroTag: "create",
           onPressed: () {
             Navigator.push(
@@ -73,7 +74,7 @@ class HomeView extends StatelessWidget {
                   builder: (context) => create_journal_entry_view()),
             );
           },
-        child: Icon(Icons.add, size: 36,),
+        child: Icon(Icons.add, size: 36, color: Colors.white,),
         hoverElevation: 50,
       );
   }

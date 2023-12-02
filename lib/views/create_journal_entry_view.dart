@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -110,6 +110,7 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
 
   ElevatedButton _submit() {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(backgroundColor: Color.fromRGBO(143, 148, 251, 1)),
       onPressed: () {
         JournalEntry newEntry = JournalEntry(
             id: Provider.of<JournalListProvider>(context, listen: false)
@@ -132,7 +133,7 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
                   entry: JournalEntryViewModel(journalEntry: newEntry))),
         );
       },
-      child: Text("Create Dream Entry"),
+      child: Text("Create Dream Entry", style: TextStyle(color: Colors.white),)
     );
   }
 

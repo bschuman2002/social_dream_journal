@@ -59,7 +59,7 @@ class journal_entry_view extends StatelessWidget {
           width: 340,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.purpleAccent,
+              backgroundColor: Color.fromRGBO(143, 148, 251, 1),
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),

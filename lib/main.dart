@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_dream_journal/models/journal_entry.dart';
@@ -6,87 +9,133 @@ import 'package:social_dream_journal/views/home_view.dart';
 import 'package:social_dream_journal/viewmodels/journal_entry_list_view_model.dart';
 import 'package:social_dream_journal/models/user.dart';
 
-void main() {
-  //Example journal data
-  Map<String, dynamic> jsonEntry = {
-    "id": 1,
-    "userID": 1,
-    "date": "2023-11-12T08:00:00Z",
-    "text": "I found myself in the backyard of my childhood home, surrounded by "
-        "lush greenery and the familiar sights of my youth. The air felt crisp, "
-        "and there was a gentle breeze. As I walked towards the old oak tree, "
-        "I noticed a peculiar door embedded in its trunk.",
-    "sleepScore": 6,
-    "privacy": "true"
-  };
-
-  Map<String, dynamic> jsonEntry2 = {
-    "id": 2,
-    "userID": 1,
-    "date": "2023-11-11T08:00:00Z",
-    "text": "In this dream, I found myself navigating through a bustling city"
-        " that seemed both futuristic and slightly dystopian.",
-    "sleepScore": 7,
-    "privacy": "false"
-  };
-
-  JournalEntry journalEntry = JournalEntry.fromJson(jsonEntry);
-  JournalEntry journalEntry2 = JournalEntry.fromJson(jsonEntry2);
-
-  List<JournalEntry> journalEntries = [];
-  journalEntries.add(journalEntry);
-  journalEntries.add(journalEntry2);
-
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   //Example User
-  User currUser = User(
+  User defaultUser = User(
       id: 1,
       username: "johnDoe1",
       password: "123",
       following: [],
       followers: []);
   List<User> allUsers = [];
-  allUsers.add(currUser);
+  allUsers.add(defaultUser);
 
-  runApp(MyApp(
-      currentUser: currUser, allEntries: journalEntries, allUsers: allUsers));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final User currentUser;
-  final List<JournalEntry> allEntries;
-  final List<User> allUsers;
+  User defaultUser = User(
+      id: 1,
+      username: "johnDoe1",
+      password: "123",
+      following: [],
+      followers: []);
 
-  MyApp(
-      {required this.currentUser,
-      required this.allEntries,
-      required this.allUsers});
+  MyApp();
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<JournalListProvider>(create: (context) {
-          JournalListProvider appProvider = JournalListProvider();
+    return MaterialApp(
+      home: FutureBuilder(
+        // Replace the Future with your logic to load the JSON file
+        future: Future.wait([loadEntryData(), loadUserData()]),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              // Handle error case
+              return Center(child: Text('Error loading data'));
+            }
 
-          appProvider.initialize(currentUser, allEntries);
+            // Handle the loaded data
+            List<Map<String, dynamic>>? entriesJson =
+                snapshot.data?[0] as List<Map<String, dynamic>>?;
 
-          return appProvider;
-        }),
-        ChangeNotifierProvider<UserProvider>(create: (context) {
-          UserProvider userProvider = UserProvider();
+            List<Map<String, dynamic>>? usersJson =
+                snapshot.data?[1] as List<Map<String, dynamic>>?;
 
-          userProvider.initialize(currentUser, allUsers);
+            if (entriesJson != null && usersJson != null) {
+              List<JournalEntry> entries = entriesJson
+                  .map((entry) => JournalEntry.fromJson(entry))
+                  .toList();
 
-          return userProvider;
-        })
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-          home: HomeView(),
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          )),
+              List<User> allUsers = usersJson
+                .map((user) => User.fromJson(user))
+                .toList();
+
+              return MultiProvider(
+                providers: [
+                  ChangeNotifierProvider<JournalListProvider>(
+                    create: (context) {
+                      JournalListProvider appProvider = JournalListProvider();
+                      appProvider.initialize(
+                          defaultUser, entries); // Use the loaded entries
+                      return appProvider;
+                    },
+                  ),
+                  ChangeNotifierProvider<UserProvider>(
+                    create: (context) {
+                      UserProvider userProvider = UserProvider();
+                      userProvider.initialize(defaultUser, allUsers);
+                      return userProvider;
+                    },
+                  ),
+                ],
+                child: MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  home: HomeView(),
+                  theme: ThemeData(
+                    colorScheme:
+                        ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                    useMaterial3: true,
+                  ),
+                ),
+              );
+            } else {
+              // Handle the case where data is null or empty
+              return Center(child: Text('No data available'));
+            }
+          } else {
+            // Show a loading indicator
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        },
+      ),
     );
+  }
+
+  Future<List<Map<String, dynamic>>?> loadEntryData() async {
+    try {
+      // Load the content of the JSON file from the 'assets' folder
+      String jsonData =
+          await rootBundle.loadString("assets/data/journal_entries.json");
+
+      // Parse the JSON data
+      List<Map<String, dynamic>> entries =
+          jsonDecode(jsonData).cast<Map<String, dynamic>>();
+      ;
+      return entries;
+    } catch (e) {
+      print('Error loading JSON data: $e');
+      return null;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>?> loadUserData() async {
+    try {
+      String userData =
+      await rootBundle.loadString("assets/data/users.json");
+
+      List<Map<String, dynamic>> users =
+          jsonDecode(userData).cast<Map<String, dynamic>>();
+      return users;
+    } catch (e) {
+      print('Error loading JSON data: $e');
+      return null;
+    }
   }
 }

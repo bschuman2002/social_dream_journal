@@ -32,8 +32,8 @@ class JournalListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeUser(User newUser) {
-    _userViewModel = UserViewModel(user: newUser);
+  void changeUser(UserViewModel newUser) {
+    _userViewModel = newUser;
 
     _userJournalViewModels = _entriesNotVM
         .where((entry) => entry.userId == currentUser.id)

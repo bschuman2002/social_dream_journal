@@ -10,6 +10,7 @@ class JournalListProvider extends ChangeNotifier {
   UserViewModel? _userViewModel;
   List<JournalEntryViewModel> _userJournalViewModels = [];
   List<JournalEntryViewModel> _allEntries = [];
+  List<JournalEntry> _entriesNotVM = [];
 
   UserViewModel get userViewModel => _userViewModel!;
   List<JournalEntryViewModel> get userJournalViewModels => _userJournalViewModels;
@@ -18,7 +19,7 @@ class JournalListProvider extends ChangeNotifier {
 
   void initialize(User currentUser, List<JournalEntry> allEntries) {
     _userViewModel = UserViewModel(user: currentUser);
-
+    _entriesNotVM = allEntries;
     allEntries.map((entry) => _allEntries.add(JournalEntryViewModel(journalEntry: entry))).toList();
 
     _userJournalViewModels = allEntries
@@ -28,6 +29,17 @@ class JournalListProvider extends ChangeNotifier {
 
 
     // Notify listeners after initializing the view models
+    notifyListeners();
+  }
+
+  void changeUser(User newUser) {
+    _userViewModel = UserViewModel(user: newUser);
+
+    _userJournalViewModels = _entriesNotVM
+        .where((entry) => entry.userId == currentUser.id)
+        .map((entry) => JournalEntryViewModel(journalEntry: entry))
+        .toList();
+
     notifyListeners();
   }
 

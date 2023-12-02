@@ -38,6 +38,12 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void changeCurrentUser(User newUser) {
+    _currentUser = UserViewModel(user: newUser);
+
+    notifyListeners();
+  }
+
   String getUsernameById(int userId) {
     // Find the user with the given ID and return the username
     UserViewModel? user = _allUsers.firstWhere((user) => user.id == userId, orElse: () => UserViewModel(user: User(id: 0, username: 'error', password: "error", following: [], followers: [])) );

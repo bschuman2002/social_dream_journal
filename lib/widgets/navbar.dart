@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_dream_journal/views/graph_view.dart';
 import 'package:social_dream_journal/views/home_view.dart';
+import 'package:social_dream_journal/views/journal_feed_view.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key, required this.pageIndex});
@@ -23,7 +24,7 @@ class _NavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     List<Widget> pages = [
       const HomeView(),
-      const HomeView(), // Change this to journal
+      const JournalFeedView(), // Change this to journal
       const GraphView(), // Change this to trends
       const HomeView() // Change this to social
     ];

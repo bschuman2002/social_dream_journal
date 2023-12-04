@@ -5,7 +5,7 @@ import 'package:social_dream_journal/models/journal_entry.dart';
 import 'package:social_dream_journal/viewmodels/journal_entry_view_model.dart';
 import 'package:social_dream_journal/views/create_journal_entry_view.dart';
 import 'package:social_dream_journal/widgets/navbar.dart';
-import '../viewmodels/journal_entry_list_view_model.dart';
+import 'package:social_dream_journal/viewmodels/journal_entry_list_view_model.dart';
 import 'journal_entry_view.dart';
 
 class HomeView extends StatelessWidget {
@@ -17,15 +17,9 @@ class HomeView extends StatelessWidget {
         now.month == date.month &&
         now.day == date.day) {
       return 'Today';
-    } else if (now
-        .subtract(Duration(days: 1))
-        .year == date.year &&
-        now
-            .subtract(Duration(days: 1))
-            .month == date.month &&
-        now
-            .subtract(Duration(days: 1))
-            .day == date.day) {
+    } else if (now.subtract(Duration(days: 1)).year == date.year &&
+        now.subtract(Duration(days: 1)).month == date.month &&
+        now.subtract(Duration(days: 1)).day == date.day) {
       return 'Yesterday';
     } else {
       return DateFormat('MMMM d, yyyy').format(date);
@@ -43,21 +37,20 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<JournalEntryViewModel> userEntries =
-    Provider
-        .of<JournalListProvider>(context)
-        .userJournalViewModels
-        .toList()
-      ..sort((a, b) => b.date.compareTo(a.date));
+        Provider.of<JournalListProvider>(context).userJournalViewModels.toList()
+          ..sort((a, b) => b.date.compareTo(a.date));
 
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
         floatingActionButton: _FloatingActionButton(context),
         body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           _homeAndAdd(context),
           SizedBox(height: 30),
           _subtitle(),
           Expanded(
-            child: _listOfEntries(userEntries,),
+            child: _listOfEntries(
+              userEntries,
+            ),
           ),
         ]),
         bottomNavigationBar: const NavBar(pageIndex: 0));
@@ -65,17 +58,19 @@ class HomeView extends StatelessWidget {
 
   FloatingActionButton _FloatingActionButton(BuildContext context) {
     return FloatingActionButton(
-        heroTag: "create",
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => create_journal_entry_view()),
-            );
-          },
-        child: Icon(Icons.add, size: 36,),
-        hoverElevation: 50,
-      );
+      heroTag: "create",
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => create_journal_entry_view()),
+        );
+      },
+      child: Icon(
+        Icons.add,
+        size: 36,
+      ),
+      hoverElevation: 50,
+    );
   }
 
   Row _homeAndAdd(BuildContext context) {
@@ -98,11 +93,11 @@ class HomeView extends StatelessWidget {
       //             },
       //           )
       //       ),
-            // Padding(
-            //     padding: EdgeInsets.only(right: 10),
-            //     child: Text("Add Entry", style: TextStyle(fontSize: 20)))
-          //])
-     // )
+      // Padding(
+      //     padding: EdgeInsets.only(right: 10),
+      //     child: Text("Add Entry", style: TextStyle(fontSize: 20)))
+      //])
+      // )
     ]);
   }
 
@@ -131,8 +126,8 @@ class HomeView extends StatelessWidget {
       padding: EdgeInsets.only(top: 0),
       child: userEntries.isEmpty
           ? Center(
-        child: Text('No journal entries yet.'),
-      )
+              child: Text('No journal entries yet.'),
+            )
           : buildListView(userEntries),
     );
   }
@@ -148,14 +143,15 @@ class HomeView extends StatelessWidget {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>
-                      journal_entry_view(entry: journalEntry)
-                  ),
-                );
-              },
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            journal_entry_view(entry: journalEntry)),
+                  );
+                },
                 child: Padding(
                     padding: EdgeInsets.only(left: 20),
                     child: Row(

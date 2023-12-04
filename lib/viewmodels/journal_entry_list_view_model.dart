@@ -11,11 +11,14 @@ class JournalListProvider extends ChangeNotifier {
   List<JournalEntryViewModel> _userJournalViewModels = [];
   List<JournalEntryViewModel> _allEntries = [];
   List<JournalEntry> _entriesNotVM = [];
+  List<JournalEntryViewModel> currentUserFollowingList = [];
 
   UserViewModel get userViewModel => _userViewModel!;
   List<JournalEntryViewModel> get userJournalViewModels => _userJournalViewModels;
   List<JournalEntryViewModel> get allEntries => _allEntries;
   UserViewModel get currentUser => _userViewModel!;
+  List<JournalEntryViewModel> get followingList => currentUserFollowingList;
+
 
   void initialize(User currentUser, List<JournalEntry> allEntries) {
     _userViewModel = UserViewModel(user: currentUser);
@@ -26,6 +29,7 @@ class JournalListProvider extends ChangeNotifier {
         .where((entry) => entry.userId == currentUser.id)
         .map((entry) => JournalEntryViewModel(journalEntry: entry))
         .toList();
+
 
 
     // Notify listeners after initializing the view models
@@ -39,6 +43,12 @@ class JournalListProvider extends ChangeNotifier {
         .where((entry) => entry.userId == currentUser.id)
         .map((entry) => JournalEntryViewModel(journalEntry: entry))
         .toList();
+
+    for(JournalEntryViewModel entry in _allEntries) {
+      if(currentUser.following.contains(entry.userId)) {
+        currentUserFollowingList.add(entry);
+      }
+    }
 
     notifyListeners();
   }
@@ -54,4 +64,17 @@ class JournalListProvider extends ChangeNotifier {
     // Notify listeners after adding the entry
     notifyListeners();
   }
+
+  List<JournalEntryViewModel> getUsersEntries(int id) {
+    List<JournalEntryViewModel> entries = [];
+
+    for(JournalEntryViewModel entry in _allEntries) {
+      if(entry.userId == id && entry.privacy == true) {
+        entries.add(entry);
+      }
+    }
+
+    return entries;
+  }
+
 }

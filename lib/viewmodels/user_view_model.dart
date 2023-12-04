@@ -19,11 +19,11 @@ class UserViewModel {
     return user.password;
   }
 
-  List<User> get following {
+  List<int> get following {
     return user.following;
   }
 
-  List<User> get followers {
+  List<int> get followers {
     return user.followers;
   }
 }
@@ -31,6 +31,9 @@ class UserViewModel {
 class UserProvider extends ChangeNotifier {
   List<UserViewModel> _allUsers = [];
   UserViewModel? _currentUser;
+  List<int> following = [];
+
+  List<int> get followingList => following;
 
   void initialize(User currentUser, List<User> allUsers) {
     _currentUser = UserViewModel(user: currentUser);

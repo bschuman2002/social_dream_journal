@@ -2,8 +2,8 @@ class User {
   final int id;
   final String username;
   final String password;
-  List<User> following;
-  List<User> followers;
+  List<int> following;
+  List<int> followers;
 
   User(
       {required this.id,
@@ -19,8 +19,8 @@ class User {
       id: json['id'],
       username: json['username'],
       password: json['password'],
-      following: following.cast<User>(),
-      followers: followers.cast<User>()
+      following: following.cast<int>(),
+      followers: followers.cast<int>()
     );
   }
 }

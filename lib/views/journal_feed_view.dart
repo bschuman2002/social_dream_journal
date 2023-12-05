@@ -1,10 +1,7 @@
-import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:social_dream_journal/models/journal_entry.dart';
 import 'package:social_dream_journal/viewmodels/journal_entry_view_model.dart';
-import 'package:social_dream_journal/views/create_journal_entry_view.dart';
 import 'package:social_dream_journal/widgets/navbar.dart';
 import 'package:social_dream_journal/viewmodels/journal_entry_list_view_model.dart';
 import 'journal_entry_view.dart';
@@ -148,9 +145,9 @@ String formatJournalDate(DateTime date) {
   final now = DateTime.now();
   if (now.year == date.year && now.month == date.month && now.day == date.day) {
     return 'Today';
-  } else if (now.subtract(Duration(days: 1)).year == date.year &&
-      now.subtract(Duration(days: 1)).month == date.month &&
-      now.subtract(Duration(days: 1)).day == date.day) {
+  } else if (now.subtract(const Duration(days: 1)).year == date.year &&
+      now.subtract(const Duration(days: 1)).month == date.month &&
+      now.subtract(const Duration(days: 1)).day == date.day) {
     return 'Yesterday';
   } else {
     return DateFormat('MMMM d, yyyy').format(date);
@@ -167,7 +164,7 @@ String formatPrivacy(bool privacy) {
 
 Padding _listOfEntries(List<JournalEntryViewModel> userEntries) {
   return Padding(
-    padding: EdgeInsets.only(top: 0),
+    padding: const EdgeInsets.only(top: 0),
     child: userEntries.isEmpty
         ? const Center(
             child: Text('No journal entries yet.'),
@@ -197,7 +194,7 @@ ListView buildListView(List<JournalEntryViewModel> userEntries) {
                 );
               },
               child: Padding(
-                  padding: EdgeInsets.only(left: 20),
+                  padding: const EdgeInsets.only(left: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -207,7 +204,7 @@ ListView buildListView(List<JournalEntryViewModel> userEntries) {
                               decoration: TextDecoration.underline,
                               fontSize: 25)),
                       Padding(
-                        padding: EdgeInsets.only(right: 20),
+                        padding: const EdgeInsets.only(right: 20),
                         child: Text(formatPrivacy(journalEntry.privacy),
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 15)),
@@ -216,12 +213,12 @@ ListView buildListView(List<JournalEntryViewModel> userEntries) {
                   )),
             ),
 
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Column(children: [
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Text('${journalEntry.text}',
-                    style: TextStyle(
+                child: Text(journalEntry.text,
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 20,
                     )),

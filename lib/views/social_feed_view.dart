@@ -67,7 +67,7 @@ class SocialFeed extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => searchView()),
+              builder: (context) => searchView(allUsers: Provider.of<UserProvider>(context, listen: false).allUsers)),
         );
       },
       child: Icon(Icons.search, size: 36, color: Colors.white,),

@@ -33,6 +33,7 @@ class UserProvider extends ChangeNotifier {
   UserViewModel? _currentUser;
   List<int> following = [];
 
+  List<UserViewModel> get allUsers => _allUsers;
   List<int> get followingList => following;
 
   void initialize(User currentUser, List<User> allUsers) {
@@ -44,6 +45,7 @@ class UserProvider extends ChangeNotifier {
 
   void changeCurrentUser(UserViewModel newUser) {
     _currentUser = newUser;
+    following = newUser.following;
 
     notifyListeners();
   }

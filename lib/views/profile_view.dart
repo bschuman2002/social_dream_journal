@@ -3,20 +3,35 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:social_dream_journal/viewmodels/journal_entry_list_view_model.dart';
+import 'package:social_dream_journal/viewmodels/journal_entry_view_model.dart';
 
 import '../viewmodels/journal_entry_view_model.dart';
 import '../viewmodels/user_view_model.dart';
+import '../widgets/navbar.dart';
 
-class profileView extends StatelessWidget {
-  int userId;
+class ProfileView extends StatefulWidget {
+  final int userId;
+  bool isFollowingUser;
 
-  profileView({required this.userId});
+  ProfileView({required this.userId, required this.isFollowingUser});
 
+  @override
+  _ProfileViewState createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+  late bool isFollowing;
+
+  @override
+  void initState() {
+    super.initState();
+    isFollowing = widget.isFollowingUser;
+  }
 
   @override
   Widget build(BuildContext context) {
     List<JournalEntryViewModel> usersEntries = Provider
-        .of<JournalListProvider>(context).getUsersEntries(userId);
+        .of<JournalListProvider>(context).getUsersEntries(widget.userId);
     return Scaffold(
       appBar: AppBar(),
       body: Column( children: [
@@ -27,14 +42,42 @@ class profileView extends StatelessWidget {
               Expanded(
                 child: _listOfEntries(usersEntries,),
               ),
+        GestureDetector(
+            onTap: () {
+              Provider.of<UserProvider>(context, listen: false).handleFollowUnfollow(widget.userId);
+              Provider.of<JournalListProvider>(context, listen: false).updateFollowingList(widget.userId, !isFollowing);
+              setState(() {
+                isFollowing = !isFollowing;
+              });
+
+            },
+            child: Container(
+              height: 50,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  gradient: LinearGradient(colors: [
+                    Color.fromRGBO(143, 148, 251, 1),
+                    Color.fromRGBO(143, 148, 251, .6),
+                  ])),
+              child: Center(
+                child: Text(
+                  isFollowing ? "Unfollow User" : "Follow User",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ))
        ]
       ),
+      bottomNavigationBar: NavBar(pageIndex: 3,),
+
     );
   }
 
   Text usernameTitle(BuildContext context) {
     return Text(
-          "${Provider.of<UserProvider>(context).getUsernameById(userId)}"
+          "${Provider.of<UserProvider>(context).getUsernameById(widget.userId)}"
           "'s Public Profile",
           style: TextStyle(
             fontSize: 30
@@ -69,7 +112,7 @@ class profileView extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>
-                      profileView(userId: journalEntry.userId)
+                      ProfileView(userId: journalEntry.userId, isFollowingUser: false)
                   ),
                 );
               },

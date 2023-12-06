@@ -120,7 +120,7 @@ class SocialFeed extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>
-                      profileView(userId: journalEntry.userId)
+                      ProfileView(userId: journalEntry.userId, isFollowingUser: Provider.of<UserProvider>(context).followingUser(journalEntry.userId) == true)
                   ),
                 );
               },

@@ -77,4 +77,24 @@ class JournalListProvider extends ChangeNotifier {
     return entries;
   }
 
+  void updateFollowingList(int UserID, bool? isFollowing) {
+    if(isFollowing != null) {
+    if (isFollowing) {
+      for (JournalEntryViewModel entry in _allEntries) {
+        if (entry.userId == UserID) {
+          followingList.add(entry);
+        }
+      }
+    } else {
+      for (JournalEntryViewModel entry in _allEntries) {
+        if (entry.userId == UserID) {
+          followingList.remove(entry);
+        }
+      }
+    }
+  }
+
+    notifyListeners();
+  }
+
 }

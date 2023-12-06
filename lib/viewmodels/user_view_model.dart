@@ -70,6 +70,20 @@ class UserProvider extends ChangeNotifier {
     return false;
   }
 
+  bool? followingUser(int id) {
+    return _currentUser?.following.contains(id);
+  }
+
+  void handleFollowUnfollow(int userID) {
+      if(_currentUser?.following.contains(userID) == true) {
+          followingList.remove(userID);
+      } else {
+          followingList.add(userID);
+      }
+
+      notifyListeners();
+  }
+
   String getUsernameById(int userId) {
     // Find the user with the given ID and return the username
     UserViewModel? user = _allUsers.firstWhere((user) => user.id == userId, orElse: () => UserViewModel(user: User(id: 0, username: 'error', password: "error", following: [], followers: [])) );

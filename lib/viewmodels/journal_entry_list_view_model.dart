@@ -11,11 +11,14 @@ class JournalListProvider extends ChangeNotifier {
   List<JournalEntryViewModel> _userJournalViewModels = [];
   List<JournalEntryViewModel> _allEntries = [];
   List<JournalEntry> _entriesNotVM = [];
+  List<JournalEntryViewModel> currentUserFollowingList = [];
 
   UserViewModel get userViewModel => _userViewModel!;
   List<JournalEntryViewModel> get userJournalViewModels => _userJournalViewModels;
   List<JournalEntryViewModel> get allEntries => _allEntries;
   UserViewModel get currentUser => _userViewModel!;
+  List<JournalEntryViewModel> get followingList => currentUserFollowingList;
+
 
   void initialize(User currentUser, List<JournalEntry> allEntries) {
     _userViewModel = UserViewModel(user: currentUser);
@@ -28,17 +31,24 @@ class JournalListProvider extends ChangeNotifier {
         .toList();
 
 
+
     // Notify listeners after initializing the view models
     notifyListeners();
   }
 
-  void changeUser(User newUser) {
-    _userViewModel = UserViewModel(user: newUser);
+  void changeUser(UserViewModel newUser) {
+    _userViewModel = newUser;
 
     _userJournalViewModels = _entriesNotVM
         .where((entry) => entry.userId == currentUser.id)
         .map((entry) => JournalEntryViewModel(journalEntry: entry))
         .toList();
+
+    for(JournalEntryViewModel entry in _allEntries) {
+      if(currentUser.following.contains(entry.userId) && entry.privacy == true) {
+        currentUserFollowingList.add(entry);
+      }
+    }
 
     notifyListeners();
   }
@@ -54,4 +64,43 @@ class JournalListProvider extends ChangeNotifier {
     // Notify listeners after adding the entry
     notifyListeners();
   }
+
+  List<JournalEntryViewModel> getUsersEntries(int id) {
+    List<JournalEntryViewModel> entries = [];
+
+    for(JournalEntryViewModel entry in _allEntries) {
+      if(entry.userId == id && entry.privacy == true) {
+        entries.add(entry);
+      }
+    }
+
+    return entries;
+  }
+
+  void updateFollowingList(int UserID, bool? isFollowing) {
+    if(isFollowing != null) {
+    if (isFollowing) {
+      for (JournalEntryViewModel entry in _allEntries) {
+        if (entry.userId == UserID && entry.privacy == true) {
+          followingList.add(entry);
+        }
+      }
+    } else {
+      for (JournalEntryViewModel entry in _allEntries) {
+        if (entry.userId == UserID) {
+          followingList.remove(entry);
+        }
+      }
+    }
+  }
+
+    notifyListeners();
+  }
+
+  void UpdatePrivacy(JournalEntryViewModel entry, privacy) {
+    entry.privacy = privacy;
+
+    notifyListeners();
+  }
+
 }

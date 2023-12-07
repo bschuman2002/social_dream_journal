@@ -58,19 +58,18 @@ class HomeView extends StatelessWidget {
 
   FloatingActionButton _FloatingActionButton(BuildContext context) {
     return FloatingActionButton(
-      heroTag: "create",
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => create_journal_entry_view()),
-        );
-      },
-      child: Icon(
-        Icons.add,
-        size: 36,
-      ),
-      hoverElevation: 50,
-    );
+      backgroundColor: Color.fromRGBO(143, 148, 251, 1),
+        heroTag: "create",
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => create_journal_entry_view()),
+            );
+          },
+        child: Icon(Icons.add, size: 36, color: Colors.white,),
+        hoverElevation: 50,
+      );
   }
 
   Row _homeAndAdd(BuildContext context) {

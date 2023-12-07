@@ -8,6 +8,7 @@ import 'package:social_dream_journal/viewmodels/user_view_model.dart';
 import 'package:social_dream_journal/views/home_view.dart';
 import 'package:social_dream_journal/viewmodels/journal_entry_list_view_model.dart';
 import 'package:social_dream_journal/models/user.dart';
+import 'package:social_dream_journal/views/login_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -83,7 +84,7 @@ class MyApp extends StatelessWidget {
                 ],
                 child: MaterialApp(
                   debugShowCheckedModeBanner: false,
-                  home: HomeView(),
+                  home: LoginView(),
                   theme: ThemeData(
                     colorScheme:
                         ColorScheme.fromSeed(seedColor: Colors.deepPurple),

@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:social_dream_journal/models/user.dart';
 
@@ -18,11 +19,11 @@ class UserViewModel {
     return user.password;
   }
 
-  List<User> get following {
+  List<int> get following {
     return user.following;
   }
 
-  List<User> get followers {
+  List<int> get followers {
     return user.followers;
   }
 }
@@ -30,6 +31,10 @@ class UserViewModel {
 class UserProvider extends ChangeNotifier {
   List<UserViewModel> _allUsers = [];
   UserViewModel? _currentUser;
+  List<int> following = [];
+
+  List<UserViewModel> get allUsers => _allUsers;
+  List<int> get followingList => following;
 
   void initialize(User currentUser, List<User> allUsers) {
     _currentUser = UserViewModel(user: currentUser);
@@ -38,10 +43,47 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeCurrentUser(User newUser) {
-    _currentUser = UserViewModel(user: newUser);
+  void changeCurrentUser(UserViewModel newUser) {
+    _currentUser = newUser;
+    following = newUser.following;
 
     notifyListeners();
+  }
+
+  void addUser(String enteredUsername, String enteredPassword) {
+    int maxId = 1;
+    for(UserViewModel user in _allUsers) {
+      if(maxId < user.id) {
+        maxId = user.id;
+      }
+    }
+    User newUser = User(id: maxId + 1, username: enteredUsername, password: enteredPassword, following: [], followers: []);
+
+    _allUsers.add(UserViewModel(user: newUser));
+    notifyListeners();
+  }
+
+  bool usernameExists(String enteredUsername) {
+    for (UserViewModel user in _allUsers) {
+      if (user.username == enteredUsername) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool? followingUser(int id) {
+    return _currentUser?.following.contains(id);
+  }
+
+  void handleFollowUnfollow(int userID) {
+      if(_currentUser?.following.contains(userID) == true) {
+          followingList.remove(userID);
+      } else {
+          followingList.add(userID);
+      }
+
+      notifyListeners();
   }
 
   String getUsernameById(int userId) {
@@ -49,4 +91,17 @@ class UserProvider extends ChangeNotifier {
     UserViewModel? user = _allUsers.firstWhere((user) => user.id == userId, orElse: () => UserViewModel(user: User(id: 0, username: 'error', password: "error", following: [], followers: [])) );
     return user?.username ?? 'Unknown'; // Return 'Unknown' if the user is not found
   }
+
+  UserViewModel? checkCredentialsLogin(String enteredUsername, String enteredPassword) {
+    for (UserViewModel user in _allUsers) {
+      if (user.username == enteredUsername && user.password == enteredPassword) {
+        // Credentials match
+        changeCurrentUser(user);
+        return user;
+      }
+    }
+    // No matching user found
+    return null;
+  }
+
 }

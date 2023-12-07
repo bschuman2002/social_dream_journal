@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:social_dream_journal/models/journal_entry.dart';
 
 class JournalEntryViewModel {
@@ -21,6 +22,10 @@ class JournalEntryViewModel {
     return journalEntry.privacy;
   }
 
+  void set privacy(bool priv) {
+    journalEntry.privacy = priv;
+  }
+
   int get sleepScore {
     return journalEntry.sleepScore;
   }
@@ -29,3 +34,4 @@ class JournalEntryViewModel {
     return journalEntry.text;
   }
 }
+

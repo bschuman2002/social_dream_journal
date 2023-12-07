@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_dream_journal/views/graph_view.dart';
 import 'package:social_dream_journal/views/home_view.dart';
+import 'package:social_dream_journal/views/social_feed_view.dart';
 import 'package:social_dream_journal/views/journal_feed_view.dart';
 
 class NavBar extends StatefulWidget {
@@ -26,11 +27,11 @@ class _NavBarState extends State<NavBar> {
       const HomeView(),
       const JournalFeedView(), // Change this to journal
       const GraphView(), // Change this to trends
-      const HomeView() // Change this to social
+      const SocialFeed() // Change this to social
     ];
     return NavigationBar(
       destinations: const <Widget>[
-        NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Home'),
+        NavigationDestination(icon: Icon(Icons.home_outlined,), label: 'Home'),
         NavigationDestination(
             icon: Icon(Icons.edit_square), label: "Journal Entries"),
         NavigationDestination(icon: Icon(Icons.trending_up), label: "Trends"),

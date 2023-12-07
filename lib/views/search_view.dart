@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_dream_journal/models/user.dart';
+import 'package:social_dream_journal/viewmodels/journal_entry_list_view_model.dart';
 import 'package:social_dream_journal/viewmodels/user_view_model.dart';
 import 'package:social_dream_journal/views/profile_view.dart';
 import 'package:social_dream_journal/widgets/navbar.dart';
@@ -33,7 +34,9 @@ class _SearchViewState extends State<searchView> {
 
   @override
   Widget build(BuildContext context) {
-
+    display_list.remove(
+      Provider.of<JournalListProvider>(context, listen: false).currentUser
+    );
     return Scaffold(
       appBar: AppBar(),
       body: Padding(

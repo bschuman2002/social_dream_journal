@@ -42,37 +42,44 @@ class _ProfileViewState extends State<ProfileView> {
               Expanded(
                 child: _listOfEntries(usersEntries,),
               ),
-        GestureDetector(
-            onTap: () {
-              Provider.of<UserProvider>(context, listen: false).handleFollowUnfollow(widget.userId);
-              Provider.of<JournalListProvider>(context, listen: false).updateFollowingList(widget.userId, !isFollowing);
-              setState(() {
-                isFollowing = !isFollowing;
-              });
-
-            },
-            child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  gradient: LinearGradient(colors: [
-                    Color.fromRGBO(143, 148, 251, 1),
-                    Color.fromRGBO(143, 148, 251, .6),
-                  ])),
-              child: Center(
-                child: Text(
-                  isFollowing ? "Unfollow User" : "Follow User",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ))
+              Padding(
+                  padding: EdgeInsets.all(35.0),
+                  child:_followButton(context)
+              )
        ]
       ),
       bottomNavigationBar: NavBar(pageIndex: 3,),
 
     );
+  }
+
+  GestureDetector _followButton(BuildContext context) {
+    return GestureDetector(
+          onTap: () {
+            Provider.of<UserProvider>(context, listen: false).handleFollowUnfollow(widget.userId);
+            Provider.of<JournalListProvider>(context, listen: false).updateFollowingList(widget.userId, !isFollowing);
+            setState(() {
+              isFollowing = !isFollowing;
+            });
+
+          },
+          child: Container(
+            height: 50,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                gradient: LinearGradient(colors: [
+                  Color.fromRGBO(143, 148, 251, 1),
+                  Color.fromRGBO(143, 148, 251, .6),
+                ])),
+            child: Center(
+              child: Text(
+                isFollowing ? "Unfollow User" : "Follow User",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ));
   }
 
   Text usernameTitle(BuildContext context) {

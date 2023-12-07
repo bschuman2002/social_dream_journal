@@ -61,13 +61,13 @@ class TrendLineChart extends StatelessWidget {
                 showTitles: true,
                 reservedSize: 40,
                 interval: 86400000 >
-                        (data.last.x.millisecondsSinceEpoch.toDouble() -
-                                data.first.x.millisecondsSinceEpoch
+                        (data.isEmpty ? 0 : data.last.x.millisecondsSinceEpoch.toDouble() -
+                            (data.isEmpty ? 0 : data.first.x.millisecondsSinceEpoch)
                                     .toDouble()) /
                             4
                     ? 86400000
-                    : (data.last.x.millisecondsSinceEpoch.toDouble() -
-                            data.first.x.millisecondsSinceEpoch.toDouble()) /
+                    : (data.isEmpty ? 0 : data.last.x.millisecondsSinceEpoch.toDouble() -
+                    (data.isEmpty ? 0 : data.first.x.millisecondsSinceEpoch).toDouble()) /
                         4,
                 // You can customize the format and appearance further if needed
                 getTitlesWidget: (value, meta) {
@@ -93,8 +93,8 @@ class TrendLineChart extends StatelessWidget {
               show: true,
               border: Border.all(color: const Color(0xff37434d), width: 1),
             ),
-            minX: data.first.x.millisecondsSinceEpoch.toDouble() - 86400000,
-            maxX: data.last.x.millisecondsSinceEpoch.toDouble() + 86400000,
+            minX: data.isEmpty ? 0 : data.first.x.millisecondsSinceEpoch.toDouble() - 86400000,
+            maxX: data.isEmpty ? 0 : data.last.x.millisecondsSinceEpoch.toDouble() + 86400000,
             minY: 0,
             maxY: 10,
             lineBarsData: [

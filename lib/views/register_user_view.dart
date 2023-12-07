@@ -5,12 +5,24 @@ import 'package:social_dream_journal/views/home_view.dart';
 
 import '../viewmodels/user_view_model.dart';
 
-class CreateAccount extends StatelessWidget {
+class CreateAccount extends StatefulWidget {
+
+  @override
+  State<CreateAccount> createState() => _CreateAccount();
+}
+
+class _CreateAccount extends State<CreateAccount> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
-  bool _usernameExists = false;
-  bool _passwordsMatch = false;
+  late bool _usernameExistsError;
+  late bool _passwordsMatchError;
+
+  @override
+  void initState() {
+    _usernameExistsError = false;
+    _passwordsMatchError = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +105,15 @@ class CreateAccount extends StatelessWidget {
                   padding: EdgeInsets.all(30.0),
                   child: Column(
                     children: <Widget>[
+                      Text(
+                        _usernameExistsError ? "Username is already in use." : "",
+                        style: TextStyle(color: Colors.redAccent),
+                      ),
+                      SizedBox(height: 5,),
+                      Text(
+                        _passwordsMatchError ? "Password and Confirm Password must match" : "",
+                        style: TextStyle(color: Colors.redAccent),
+                      ),
                       FadeInUp(
                           duration: Duration(milliseconds: 1800),
                           child: Container(
@@ -120,7 +141,6 @@ class CreateAccount extends StatelessWidget {
                                   child: TextFormField(
                                     controller: username,
                                     decoration: InputDecoration(
-                                        errorText: _usernameExists ? "Username is in use": null,
                                         border: InputBorder.none,
                                         hintText: "Username",
                                         hintStyle:
@@ -139,7 +159,6 @@ class CreateAccount extends StatelessWidget {
                                     obscureText: true,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        errorText: _passwordsMatch ? "Passwords must match" : null,
                                         hintText: "Password",
                                         hintStyle:
                                         TextStyle(color: Colors.grey[700])),
@@ -148,6 +167,17 @@ class CreateAccount extends StatelessWidget {
                                 Container(
                                   padding: EdgeInsets.all(8.0),
                                   child: TextFormField(
+                                    onChanged: (value) {
+                                      if(!passwordsMatch()) {
+                                        setState(() {
+                                          _passwordsMatchError = true;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          _passwordsMatchError = false;
+                                        });
+                                      }
+                                    },
                                     controller: confirmPassword,
                                     obscureText: true,
                                     decoration: InputDecoration(
@@ -170,9 +200,11 @@ class CreateAccount extends StatelessWidget {
                                 if (Provider.of<UserProvider>(context,
                                     listen: false)
                                     .usernameExists(username.text)) {
-                                  _usernameExists = true;
+                                  setState(() {
+                                    _usernameExistsError = true;
+                                  });
                                 } else if (!passwordsMatch()) {
-                                  _passwordsMatch = true;
+
                                 } else {
                                   Provider.of<UserProvider>(context, listen:false)
                                       .addUser(

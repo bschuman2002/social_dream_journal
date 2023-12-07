@@ -6,11 +6,22 @@ import 'package:social_dream_journal/views/home_view.dart';
 import 'package:social_dream_journal/views/register_user_view.dart';
 
 import '../viewmodels/user_view_model.dart';
+class LoginView extends StatefulWidget {
 
-class LoginView extends StatelessWidget {
+  @override
+  State<LoginView> createState() => _LoginView();
+}
+
+class _LoginView extends State<LoginView> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
-  bool _error = false;
+  late bool error;
+
+  @override
+  void initState() {
+    super.initState();
+    error = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +104,14 @@ class LoginView extends StatelessWidget {
                   padding: EdgeInsets.all(30.0),
                   child: Column(
                     children: <Widget>[
+                      Text(
+                        error ? "Incorrect Username or Password" : "",
+                        style: const TextStyle(
+                            color: Colors.redAccent,
+                            backgroundColor: Colors.transparent,
+                        ),
+                      ),
+                      SizedBox(height: 5,),
                       FadeInUp(
                           duration: Duration(milliseconds: 1800),
                           child: Container(
@@ -139,7 +158,7 @@ class LoginView extends StatelessWidget {
                                   ),
                                 )
                               ],
-                            ),
+                            ), //here
                           )),
                       SizedBox(
                         height: 30,
@@ -159,6 +178,10 @@ class LoginView extends StatelessWidget {
                                     MaterialPageRoute(
                                         builder: (context) => HomeView()),
                                   );
+                                } else {
+                                  setState(() {
+                                    error = true;
+                                  });
                                 }
                               },
                               child: Container(

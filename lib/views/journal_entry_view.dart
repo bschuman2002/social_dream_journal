@@ -211,7 +211,7 @@ class _PrivacySwitchState extends State<PrivacySwitch> {
           padding: const EdgeInsets.only(left: 40.0),
           child: Text(
               'Entry is currently ${privacy ? "public" : "private"}',
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16
               )
           ),

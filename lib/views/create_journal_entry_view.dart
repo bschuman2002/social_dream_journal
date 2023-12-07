@@ -23,11 +23,13 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
   TextEditingController _Textcontroller = TextEditingController();
   TextEditingController _sleepscore = TextEditingController();
   bool checkboxValue = false;
+  late bool _privacy;
 
   @override
   void initState() {
     dateInput.text = ""; //set the initial value of text field
     super.initState();
+    _privacy = false;
   }
 
   @override
@@ -50,7 +52,8 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
                 ),
                 _sleepScoreTitle(),
                 _sleepScore(),
-                _checkbox(),
+                privacySwitch(),
+                SizedBox(height: 10,),
                 _submit(),
               ],
             ),
@@ -121,7 +124,7 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
                 .currentUser
                 .id,
             date: DateTime.parse(dateInput.text),
-            privacy: checkboxValue,
+            privacy: _privacy,
             sleepScore: int.parse(_sleepscore.text),
             text: _Textcontroller.text);
         Provider.of<JournalListProvider>(context, listen: false)
@@ -210,13 +213,34 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
 
   AppBar _appBar(BuildContext context) {
     return AppBar(
-        // actions: [
-        //   IconButton(
-        //       onPressed: () {
-        //         Navigator.pop(context);
-        //       },
-        //       icon: Icon(Icons.arrow_back))
-        // ],
+
         );
   }
+
+  Row privacySwitch() {
+      return Row(children: [
+        Padding(
+          padding: const EdgeInsets.only(left:25.0,),
+          child: Switch(
+            value: _privacy,
+            activeColor: Colors.purple,
+            onChanged: (bool value) {
+              setState(() {
+                _privacy = value;
+              });
+            },
+          ),
+        ),
+        SizedBox(width: 5,),
+        Text(
+            'Entry will be ${_privacy ? "public" : "private"}',
+            style: const TextStyle(
+                fontSize: 16
+            )
+        ),
+      ]
+      );
+    }
 }
+
+

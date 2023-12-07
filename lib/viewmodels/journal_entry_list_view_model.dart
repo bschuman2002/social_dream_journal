@@ -45,7 +45,7 @@ class JournalListProvider extends ChangeNotifier {
         .toList();
 
     for(JournalEntryViewModel entry in _allEntries) {
-      if(currentUser.following.contains(entry.userId)) {
+      if(currentUser.following.contains(entry.userId) && entry.privacy == true) {
         currentUserFollowingList.add(entry);
       }
     }
@@ -81,7 +81,7 @@ class JournalListProvider extends ChangeNotifier {
     if(isFollowing != null) {
     if (isFollowing) {
       for (JournalEntryViewModel entry in _allEntries) {
-        if (entry.userId == UserID) {
+        if (entry.userId == UserID && entry.privacy == true) {
           followingList.add(entry);
         }
       }
@@ -93,6 +93,12 @@ class JournalListProvider extends ChangeNotifier {
       }
     }
   }
+
+    notifyListeners();
+  }
+
+  void UpdatePrivacy(JournalEntryViewModel entry, privacy) {
+    entry.privacy = privacy;
 
     notifyListeners();
   }

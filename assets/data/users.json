@@ -12,5 +12,12 @@
     "password": "1",
     "following": [1],
     "followers": []
+  },
+  {
+    "id": 3,
+    "username": "bobSmith23",
+    "password": "2",
+    "following": [1],
+    "followers": []
   }
 ]

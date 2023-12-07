@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +31,7 @@ class journal_entry_view extends StatelessWidget {
         SizedBox(height: 40,),
         _sleepScore(),
         SizedBox(height: 100,),
-        _shareEntry(),
+        PrivacySwitch(privacy: entry.privacy, entry: entry),
         ],
       )
       ),
@@ -180,4 +182,54 @@ class journal_entry_view extends StatelessWidget {
       ),
     );
   }
+
 }
+
+
+class PrivacySwitch extends StatefulWidget {
+  bool privacy;
+  JournalEntryViewModel entry;
+  PrivacySwitch({super.key, required this.privacy, required this.entry});
+
+  @override
+  State<PrivacySwitch> createState() => _PrivacySwitchState();
+}
+
+class _PrivacySwitchState extends State<PrivacySwitch> {
+  late bool privacy;
+
+  @override
+  void initState() {
+    super.initState();
+    privacy = widget.privacy;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 40.0),
+          child: Text(
+              'Entry is currently ${privacy ? "public" : "private"}',
+              style: TextStyle(
+                  fontSize: 16
+              )
+          ),
+        ),
+        Switch(
+        // This bool value toggles the switch.
+        value: privacy,
+        activeColor: Colors.purple,
+        onChanged: (bool value) {
+          // This is called when the user toggles the switch.
+          Provider.of<JournalListProvider>(context, listen: false).UpdatePrivacy(widget.entry, value);
+          setState(() {
+            privacy = value;
+          });
+        },
+      )
+    ]
+    );
+  }
+}
+

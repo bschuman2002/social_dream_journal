@@ -13,5 +13,3 @@
 5. You can navigate to the journal entries view by using the journal icon in the bottom navigation bar.  From here, you can view all of your past entries in a list, or view they by date via the calendar widget.  You can switch between these views using the toggle at the top of the page.
 6. You can view your sleep score trends on a graph by using the bottom navigation bar and navigtating to the trends icon.  You can then view a line chart of your sleep score trends.  Navigate to a given entry by clicking the dot on the graph.
 7. Use the social tab on the bottom navigation bar to view your friend's public journal entries. You can search for users from this view and follow other users (and therefore view their posts from the social feed).  To make your own posts public or private, navigate to one of your journal entries and use the ticker switch to toggle it between private and public.
-
-## Deliverable 4

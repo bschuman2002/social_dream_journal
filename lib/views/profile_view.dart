@@ -125,13 +125,7 @@ class _ProfileViewState extends State<ProfileView> {
             children: [
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ProfileView(
-                            userId: journalEntry.userId,
-                            isFollowingUser: false)),
-                  );
+
                 },
                 child: Padding(
                     padding: EdgeInsets.only(left: 20),

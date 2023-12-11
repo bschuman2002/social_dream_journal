@@ -43,7 +43,19 @@ class HomeView extends StatelessWidget {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
         floatingActionButton: _FloatingActionButton(context),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        backgroundColor: Colors.transparent,
+        body: Container(
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                    'assets/images/background.jpg'
+                  ),
+                fit: BoxFit.cover
+              )
+          ),
+          child:
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           _homeAndAdd(context),
           SizedBox(height: 30),
           _subtitle(),
@@ -52,7 +64,7 @@ class HomeView extends StatelessWidget {
               userEntries,
             ),
           ),
-        ]),
+        ])),
         bottomNavigationBar: const NavBar(pageIndex: 0));
   }
 
@@ -115,7 +127,7 @@ class HomeView extends StatelessWidget {
       padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 16.0),
       child: Text(
         'Home',
-        style: TextStyle(color: Colors.black, fontSize: 30),
+        style: TextStyle(fontSize: 30),
       ),
     );
   }
@@ -158,14 +170,15 @@ class HomeView extends StatelessWidget {
                       children: [
                         Text(formatJournalDate(journalEntry.date),
                             style: const TextStyle(
-                                color: Colors.black,
+                                color: Colors.white,
                                 decoration: TextDecoration.underline,
+                                decorationColor: Colors.white,
                                 fontSize: 25)),
                         Padding(
                           padding: EdgeInsets.only(right: 20),
                           child: Text(formatPrivacy(journalEntry.privacy),
                               style: const TextStyle(
-                                  color: Colors.black, fontSize: 15)),
+                                  color: Colors.white, fontSize: 15)),
                         )
                       ],
                     )),
@@ -177,7 +190,7 @@ class HomeView extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Text('${journalEntry.text}',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontSize: 20,
                       )),
                 )

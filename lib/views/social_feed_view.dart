@@ -13,22 +13,15 @@ import '../widgets/navbar.dart';
 class SocialFeed extends StatelessWidget {
   const SocialFeed({super.key});
 
-
   String formatJournalDate(DateTime date) {
     final now = DateTime.now();
     if (now.year == date.year &&
         now.month == date.month &&
         now.day == date.day) {
       return 'Today';
-    } else if (now
-        .subtract(Duration(days: 1))
-        .year == date.year &&
-        now
-            .subtract(Duration(days: 1))
-            .month == date.month &&
-        now
-            .subtract(Duration(days: 1))
-            .day == date.day) {
+    } else if (now.subtract(Duration(days: 1)).year == date.year &&
+        now.subtract(Duration(days: 1)).month == date.month &&
+        now.subtract(Duration(days: 1)).day == date.day) {
       return 'Yesterday';
     } else {
       return DateFormat('MMMM d, yyyy').format(date);
@@ -37,26 +30,38 @@ class SocialFeed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      List<JournalEntryViewModel> followingList = Provider.of<JournalListProvider>(context)
-          .followingList
-          .toList()
+    List<JournalEntryViewModel> followingList =
+        Provider.of<JournalListProvider>(context).followingList.toList()
           ..sort((a, b) => b.date.compareTo(a.date));
 
-      return Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-        floatingActionButton: _FloatingActionButton(context),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            _titleBar(),
-            SizedBox(height: 30,),
-            Expanded(
-              child: _listOfEntries(followingList,),
-            ),
-
-        ],
-
-        ),
-        bottomNavigationBar: NavBar(pageIndex: 3,),
-      );
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButton: _FloatingActionButton(context),
+      body: Container(
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/background.jpg'),
+                  fit: BoxFit.cover)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _titleBar(),
+              SizedBox(
+                height: 30,
+              ),
+              Expanded(
+                child: _listOfEntries(
+                  followingList,
+                ),
+              ),
+            ],
+          )),
+      bottomNavigationBar: NavBar(
+        pageIndex: 3,
+      ),
+    );
   }
 
   FloatingActionButton _FloatingActionButton(BuildContext context) {
@@ -67,31 +72,34 @@ class SocialFeed extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => searchView(allUsers: Provider.of<UserProvider>(context, listen: false).allUsers)),
+              builder: (context) => searchView(
+                  allUsers: Provider.of<UserProvider>(context, listen: false)
+                      .allUsers)),
         );
       },
-      child: Icon(Icons.search, size: 36, color: Colors.white,),
+      child: Icon(
+        Icons.search,
+        size: 36,
+        color: Colors.white,
+      ),
       hoverElevation: 50,
     );
   }
 
-
   Row _titleBar() {
-    return Row(
-              children:[
-                _FeedTitle(),
-              ]
-          );
+    return Row(children: [
+      _FeedTitle(),
+    ]);
   }
 
   Container _FeedTitle() {
     return Container(
-          padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 16.0),
-          child: Text(
-            'Feed',
-            style: TextStyle(color: Colors.black, fontSize: 30),
-          ),
-        );
+      padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 16.0),
+      child: Text(
+        'Feed',
+        style: TextStyle(color: Colors.white, fontSize: 30),
+      ),
+    );
   }
 
   Padding _listOfEntries(List<JournalEntryViewModel> userEntries) {
@@ -99,8 +107,8 @@ class SocialFeed extends StatelessWidget {
       padding: EdgeInsets.only(top: 0),
       child: userEntries.isEmpty
           ? Center(
-        child: Text('No journal entries yet.'),
-      )
+              child: Text('No journal entries yet.'),
+            )
           : buildListView(userEntries),
     );
   }
@@ -116,29 +124,36 @@ class SocialFeed extends StatelessWidget {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>
-                      ProfileView(userId: journalEntry.userId, isFollowingUser: Provider.of<UserProvider>(context).followingUser(journalEntry.userId) == true)
-                  ),
-                );
-              },
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProfileView(
+                            userId: journalEntry.userId,
+                            isFollowingUser: Provider.of<UserProvider>(context)
+                                    .followingUser(journalEntry.userId) ==
+                                true)),
+                  );
+                },
                 child: Padding(
                     padding: EdgeInsets.only(left: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(Provider.of<UserProvider>(context).getUsernameById(journalEntry.userId),
+                        Text(
+                            Provider.of<UserProvider>(context)
+                                .getUsernameById(journalEntry.userId),
                             style: const TextStyle(
-                                color: Colors.black,
+                                color: Colors.white,
                                 decoration: TextDecoration.underline,
+                                decorationColor: Colors.white,
                                 fontSize: 25)),
                         Padding(
                           padding: EdgeInsets.only(right: 20),
                           child: Text(formatJournalDate(journalEntry.date),
                               style: const TextStyle(
-                                  color: Colors.black, fontSize: 15)),
+                                  color: Colors.white, fontSize: 15)),
                         )
                       ],
                     )),
@@ -150,7 +165,7 @@ class SocialFeed extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Text('${journalEntry.text}',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontSize: 20,
                       )),
                 )
@@ -162,5 +177,4 @@ class SocialFeed extends StatelessWidget {
       },
     );
   }
-
 }

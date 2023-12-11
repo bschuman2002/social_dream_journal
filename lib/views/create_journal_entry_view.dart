@@ -36,7 +36,18 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
   Widget build(BuildContext context) {
     return Hero(
         tag: "create",
-        child: Scaffold(
+        child: Container(
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                      'assets/images/background.jpg'
+                  ),
+                  fit: BoxFit.cover
+              )
+          ),
+          child:Scaffold(
+          backgroundColor: Colors.transparent,
           appBar: _appBar(context),
           body: SingleChildScrollView(
             child: Column(
@@ -59,7 +70,7 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
             ),
           ),
           bottomNavigationBar: const NavBar(pageIndex: 0),
-        ));
+        )));
   }
 
   Padding _checkbox() {
@@ -93,7 +104,7 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
       padding: EdgeInsets.only(left: 20.0),
       child: Row(
         children: [
-          Text("Sleep Score", style: TextStyle(color: Colors.deepPurpleAccent))
+          Text("Sleep Score", style: TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -101,12 +112,17 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
 
   Padding _sleepScore() {
     return Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 60, bottom: 20),
+        padding: const EdgeInsets.only(left: 20.0, right: 60, bottom: 20),
         child: TextField(
+          style: TextStyle(color: Colors.white54),
           controller: _sleepscore,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
             labelText: 'Enter a number between 1 and 10',
+            labelStyle: TextStyle(color: Colors.white),
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.white, width: 10),
+            )
           ),
         ));
   }
@@ -150,9 +166,10 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
         keyboardType: TextInputType.multiline,
         decoration: InputDecoration(
             hintText: "Enter your dream's details",
-            hintStyle: TextStyle(color: Colors.grey),
+            hintStyle: TextStyle(color: Colors.white),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(color: Colors.white, width: 5)
             )),
       ),
     );
@@ -167,8 +184,9 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
           controller: dateInput,
           //editing controller of this TextField
           decoration: InputDecoration(
-              icon: Icon(Icons.calendar_today), //icon of text field
-              labelText: "Enter Date" //label text of field
+              icon: Icon(Icons.calendar_today, color: Colors.white,), //icon of text field
+              labelText: "Enter Date", //label text of field
+              labelStyle: TextStyle(color: Colors.white)
               ),
           readOnly: true,
           //set it true, so that user will not able to edit text
@@ -213,7 +231,7 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
 
   AppBar _appBar(BuildContext context) {
     return AppBar(
-
+          backgroundColor: Colors.transparent,
         );
   }
 
@@ -223,7 +241,7 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
           padding: const EdgeInsets.only(left:25.0,),
           child: Switch(
             value: _privacy,
-            activeColor: Colors.purple,
+            activeColor: Colors.blueAccent,
             onChanged: (bool value) {
               setState(() {
                 _privacy = value;

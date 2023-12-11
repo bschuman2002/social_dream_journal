@@ -24,19 +24,32 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
   TextEditingController _sleepscore = TextEditingController();
   bool checkboxValue = false;
   late bool _privacy;
+  late bool _error;
 
   @override
   void initState() {
     dateInput.text = ""; //set the initial value of text field
     super.initState();
     _privacy = false;
+    _error = false;
   }
 
   @override
   Widget build(BuildContext context) {
     return Hero(
         tag: "create",
-        child: Scaffold(
+        child: Container(
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                      'assets/images/background.jpg'
+                  ),
+                  fit: BoxFit.cover
+              )
+          ),
+          child:Scaffold(
+          backgroundColor: Colors.transparent,
           appBar: _appBar(context),
           body: SingleChildScrollView(
             child: Column(
@@ -54,12 +67,16 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
                 _sleepScore(),
                 privacySwitch(),
                 SizedBox(height: 10,),
+                Text(
+                  _error ? "Sleep Score Must between 1 and 10" : "",
+                  style: const TextStyle(color: Colors.red),
+                ),
                 _submit(),
               ],
             ),
           ),
           bottomNavigationBar: const NavBar(pageIndex: 0),
-        ));
+        )));
   }
 
   Padding _checkbox() {
@@ -93,7 +110,7 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
       padding: EdgeInsets.only(left: 20.0),
       child: Row(
         children: [
-          Text("Sleep Score", style: TextStyle(color: Colors.deepPurpleAccent))
+          Text("Sleep Score", style: TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -101,12 +118,28 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
 
   Padding _sleepScore() {
     return Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 60, bottom: 20),
+        padding: const EdgeInsets.only(left: 20.0, right: 60, bottom: 20),
         child: TextField(
+          onChanged: (value) {
+            if(int.parse(value) > 10 || int.parse(value) < 1) {
+              setState(() {
+                _error = true;
+              });
+            } else {
+              setState(() {
+                _error = false;
+              });
+            }
+          },
+          style: TextStyle(color: Colors.white),
           controller: _sleepscore,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
             labelText: 'Enter a number between 1 and 10',
+            labelStyle: TextStyle(color: Colors.white),
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.white, width: 10),
+            )
           ),
         ));
   }
@@ -115,26 +148,34 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(backgroundColor: Color.fromRGBO(143, 148, 251, 1)),
       onPressed: () {
-        JournalEntry newEntry = JournalEntry(
-            id: Provider.of<JournalListProvider>(context, listen: false)
-                    .allEntries
-                    .length +
-                1,
-            userId: Provider.of<JournalListProvider>(context, listen: false)
-                .currentUser
-                .id,
-            date: DateTime.parse(dateInput.text),
-            privacy: _privacy,
-            sleepScore: int.parse(_sleepscore.text),
-            text: _Textcontroller.text);
-        Provider.of<JournalListProvider>(context, listen: false)
-            .addEntry(newEntry);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => journal_entry_view(
-                  entry: JournalEntryViewModel(journalEntry: newEntry))),
-        );
+        if (int.parse(_sleepscore.text) > 10 ||
+            int.parse(_sleepscore.text) < 1) {
+          JournalEntry newEntry = JournalEntry(
+              id: Provider
+                  .of<JournalListProvider>(context, listen: false)
+                  .allEntries
+                  .length +
+                  1,
+              userId: Provider
+                  .of<JournalListProvider>(context, listen: false)
+                  .currentUser
+                  .id,
+              date: DateTime.parse(dateInput.text),
+              privacy: _privacy,
+              sleepScore: int.parse(_sleepscore.text),
+              text: _Textcontroller.text);
+          Provider.of<JournalListProvider>(context, listen: false)
+              .addEntry(newEntry);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    journal_entry_view(
+                        entry: JournalEntryViewModel(journalEntry: newEntry))),
+          );
+        } else {
+
+        }
       },
       child: Text("Create Dream Entry", style: TextStyle(color: Colors.white),)
     );
@@ -150,9 +191,10 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
         keyboardType: TextInputType.multiline,
         decoration: InputDecoration(
             hintText: "Enter your dream's details",
-            hintStyle: TextStyle(color: Colors.grey),
+            hintStyle: TextStyle(color: Colors.white),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(color: Colors.white, width: 5)
             )),
       ),
     );
@@ -167,8 +209,9 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
           controller: dateInput,
           //editing controller of this TextField
           decoration: InputDecoration(
-              icon: Icon(Icons.calendar_today), //icon of text field
-              labelText: "Enter Date" //label text of field
+              icon: Icon(Icons.calendar_today, color: Colors.white,), //icon of text field
+              labelText: "Enter Date", //label text of field
+              labelStyle: TextStyle(color: Colors.white)
               ),
           readOnly: true,
           //set it true, so that user will not able to edit text
@@ -213,7 +256,7 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
 
   AppBar _appBar(BuildContext context) {
     return AppBar(
-
+          backgroundColor: Colors.transparent,
         );
   }
 
@@ -223,7 +266,7 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
           padding: const EdgeInsets.only(left:25.0,),
           child: Switch(
             value: _privacy,
-            activeColor: Colors.purple,
+            activeColor: Colors.blueAccent,
             onChanged: (bool value) {
               setState(() {
                 _privacy = value;

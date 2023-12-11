@@ -137,6 +137,7 @@ class _LoginView extends State<LoginView> {
                                               color: Color.fromRGBO(
                                                   143, 148, 251, 1)))),
                                   child: TextField(
+                                    style: TextStyle(color: Colors.black),
                                     controller: username,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
@@ -148,6 +149,7 @@ class _LoginView extends State<LoginView> {
                                 Container(
                                   padding: EdgeInsets.all(8.0),
                                   child: TextField(
+                                    style: TextStyle(color: Colors.black),
                                     controller: password,
                                     obscureText: true,
                                     decoration: InputDecoration(

@@ -15,28 +15,44 @@ class journal_entry_view extends StatelessWidget {
 
   journal_entry_view({required this.entry});
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(context),
-      body: SingleChildScrollView ( child: Column(
-        children: [
-        SizedBox(height: 40,),
-        _journalTitleDate(),
-        SizedBox(height: 5,),
-        _username(context),
-        SizedBox(height: 40,),
-        _entryText(),
-        SizedBox(height: 40,),
-        _sleepScore(),
-        SizedBox(height: 100,),
-        PrivacySwitch(privacy: entry.privacy, entry: entry),
-        ],
-      )
-      ),
-      bottomNavigationBar: const NavBar(pageIndex: 0),
-    );
+    return Container(
+        alignment: Alignment.center,
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/background.jpg'),
+                fit: BoxFit.cover)),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: buildAppBar(context),
+          body: SingleChildScrollView(
+              child: Column(
+            children: [
+              SizedBox(
+                height: 40,
+              ),
+              _journalTitleDate(),
+              SizedBox(
+                height: 5,
+              ),
+              _username(context),
+              SizedBox(
+                height: 40,
+              ),
+              _entryText(),
+              SizedBox(
+                height: 40,
+              ),
+              _sleepScore(),
+              SizedBox(
+                height: 100,
+              ),
+              PrivacySwitch(privacy: entry.privacy, entry: entry),
+            ],
+          )),
+          bottomNavigationBar: const NavBar(pageIndex: 0),
+        ));
   }
 
   Column _shareEntry() {
@@ -48,14 +64,13 @@ class journal_entry_view extends StatelessWidget {
               padding: const EdgeInsets.only(left: 40.0),
               child: Text(
                   'Entry is currently ${entry.privacy ? "public" : "private"}',
-                  style: TextStyle(
-                      fontSize: 16
-                  )
-              ),
+                  style: TextStyle(fontSize: 16)),
             )
           ],
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         SizedBox(
           height: 40,
           width: 340,
@@ -67,17 +82,12 @@ class journal_entry_view extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
-
             onPressed: () {
               //Logic for sharing entry
               //Should be just changing the variable
             },
-            child: const Text(
-                'Share Entry with Friends',
-                style: TextStyle(
-                    fontSize: 25
-                )
-            ),
+            child: const Text('Share Entry with Friends',
+                style: TextStyle(fontSize: 25)),
           ),
         )
       ],
@@ -89,17 +99,13 @@ class journal_entry_view extends StatelessWidget {
       children: [
         Padding(
             padding: const EdgeInsets.only(left: 40.0),
-            child:
-            Text(
-                'Sleep score: ${entry.sleepScore}',
+            child: Text('Sleep score: ${entry.sleepScore}',
                 style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     decoration: TextDecoration.underline,
                     decorationThickness: 2,
-                    fontSize: 20
-                )
-            )
-        )
+                    decorationColor: Colors.white,
+                    fontSize: 20)))
       ],
     );
   }
@@ -111,9 +117,7 @@ class journal_entry_view extends StatelessWidget {
           padding: const EdgeInsets.only(left: 40.0, right: 5.0),
           child: Text(
             '${entry.text}',
-            style: TextStyle(
-                fontSize: 20
-            ),
+            style: TextStyle(fontSize: 20),
           ),
         )
       ],
@@ -131,9 +135,7 @@ class journal_entry_view extends StatelessWidget {
                   color: Colors.grey,
                   decoration: TextDecoration.underline,
                   decorationColor: Colors.grey,
-                  fontSize: 16
-              )
-          ),
+                  fontSize: 16)),
         )
       ],
     );
@@ -141,20 +143,15 @@ class journal_entry_view extends StatelessWidget {
 
   Center _journalTitleDate() {
     return Center(
-      child:
-      Text(
+      child: Text(
           'Journal Entry ${DateFormat('MM/dd/yyyy').format(entry.date)}',
-          style: TextStyle(
-              fontSize: 29,
-              fontWeight: FontWeight.w600
-          )
-      ),
+          style: TextStyle(fontSize: 29, fontWeight: FontWeight.w600)),
     );
   }
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-
+      backgroundColor: Colors.transparent,
     );
   }
 
@@ -182,13 +179,12 @@ class journal_entry_view extends StatelessWidget {
       ),
     );
   }
-
 }
-
 
 class PrivacySwitch extends StatefulWidget {
   bool privacy;
   JournalEntryViewModel entry;
+
   PrivacySwitch({super.key, required this.privacy, required this.entry});
 
   @override
@@ -207,29 +203,24 @@ class _PrivacySwitchState extends State<PrivacySwitch> {
   @override
   Widget build(BuildContext context) {
     return Row(children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 40.0),
-          child: Text(
-              'Entry is currently ${privacy ? "public" : "private"}',
-              style: const TextStyle(
-                  fontSize: 16
-              )
-          ),
-        ),
-        Switch(
+      Padding(
+        padding: const EdgeInsets.only(left: 40.0),
+        child: Text('Entry is currently ${privacy ? "public" : "private"}',
+            style: const TextStyle(fontSize: 16)),
+      ),
+      Switch(
         // This bool value toggles the switch.
         value: privacy,
-        activeColor: Colors.purple,
+        activeColor: Colors.blueAccent,
         onChanged: (bool value) {
           // This is called when the user toggles the switch.
-          Provider.of<JournalListProvider>(context, listen: false).UpdatePrivacy(widget.entry, value);
+          Provider.of<JournalListProvider>(context, listen: false)
+              .UpdatePrivacy(widget.entry, value);
           setState(() {
             privacy = value;
           });
         },
       )
-    ]
-    );
+    ]);
   }
 }
-

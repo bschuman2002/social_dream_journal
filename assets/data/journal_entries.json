@@ -22,6 +22,53 @@
     "text": "I found myself in the backyard of my childhood home, surrounded by lush greenery and the familiar sights of my youth. The air felt crisp, and there was a gentle breeze. As I walked towards the old oak tree, I noticed a peculiar door embedded in its trunk.",
     "sleepScore": 6,
     "privacy": "true"
+  },
+  {
+    "id": 4,
+    "userID": 4,
+    "date": "2023-12-01T10:30:00Z",
+    "text": "Waking up in a city that seemed to defy the laws of physics, with buildings that reached the clouds and streets paved with shimmering tiles. The sky was a canvas of vibrant colors, casting a surreal glow over everything.",
+    "sleepScore": 8,
+    "privacy": "true"
+  },
+  {
+    "id": 5,
+    "userID": 5,
+    "date": "2023-12-05T22:15:00Z",
+    "text": "In my dream, I was aboard a spaceship, hurtling through the cosmos. The stars outside the window formed constellations I had never seen before. The hum of the engines and the soft glow of the control panels created a mesmerizing ambiance.",
+    "sleepScore": 7,
+    "privacy": "true"
+  },
+  {
+    "id": 6,
+    "userID": 4,
+    "date": "2023-12-10T07:45:00Z",
+    "text": "Diving into an underwater world filled with iridescent fish and coral formations. The water was crystal clear, and the sunlight filtered through the waves, creating a mesmerizing dance of colors on the ocean floor.",
+    "sleepScore": 9,
+    "privacy": "true"
+  },
+  {
+    "id": 7,
+    "userID": 4,
+    "date": "2023-12-11T23:00:00Z",
+    "text": "Finding myself in a bustling market, surrounded by exotic spices and vibrant fabrics. The air was filled with the sounds of merchants haggling and the aroma of delicious street food. I strolled through the narrow lanes, taking in the lively atmosphere.",
+    "sleepScore": 7,
+    "privacy": "true"
+  },
+  {
+    "id": 8,
+    "userID": 5,
+    "date": "2023-12-08T05:30:00Z",
+    "text": "Exploring a futuristic cityscape with towering skyscrapers and flying cars. The buildings were adorned with holographic displays, and the streets below were bustling with people going about their day in this technologically advanced metropolis.",
+    "sleepScore": 8,
+    "privacy": "true"
+  },
+  {
+    "id": 9,
+    "userID": 5,
+    "date": "2023-12-11T18:20:00Z",
+    "text": "Adrift on a serene lake surrounded by snow-capped mountains. The air was crisp, and the only sounds were the gentle lapping of water against the boat and the distant calls of birds. It was a moment of tranquil beauty.",
+    "sleepScore": 9,
+    "privacy": "true"
   }
-
 ]

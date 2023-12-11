@@ -19,5 +19,19 @@
     "password": "2",
     "following": [1],
     "followers": []
+  },
+  {
+    "id": 4,
+    "username": "bschuman02",
+    "password": "3",
+    "following": [],
+    "followers": []
+  },
+  {
+    "id": 5,
+    "username": "Yashchintala",
+    "password": "4",
+    "following": [],
+    "followers": []
   }
 ]

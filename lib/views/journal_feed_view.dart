@@ -13,11 +13,19 @@ class JournalFeedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        _journalLogPageTitle(),
-        const SizedBox(height: 20),
-        const Expanded(child: ToggleView()),
-      ]),
+      backgroundColor: Colors.transparent,
+      body: Container(
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/background.jpg'),
+                  fit: BoxFit.cover)),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            _journalLogPageTitle(),
+            const SizedBox(height: 20),
+            const Expanded(child: ToggleView()),
+          ])),
       bottomNavigationBar: const NavBar(pageIndex: 1),
     );
   }
@@ -29,7 +37,7 @@ class JournalFeedView extends StatelessWidget {
             padding: const EdgeInsets.only(top: 60.0, left: 20.0, right: 16.0),
             child: const Text(
               'Journal Entry Log',
-              style: TextStyle(color: Colors.black, fontSize: 30),
+              style: TextStyle(color: Colors.white, fontSize: 30),
             ))
       ],
     );
@@ -200,14 +208,15 @@ ListView buildListView(List<JournalEntryViewModel> userEntries) {
                     children: [
                       Text(formatJournalDate(journalEntry.date),
                           style: const TextStyle(
-                              color: Colors.black,
+                              color: Colors.white,
                               decoration: TextDecoration.underline,
+                              decorationColor: Colors.white,
                               fontSize: 25)),
                       Padding(
                         padding: const EdgeInsets.only(right: 20),
                         child: Text(formatPrivacy(journalEntry.privacy),
                             style: const TextStyle(
-                                color: Colors.black, fontSize: 15)),
+                                color: Colors.white, fontSize: 15)),
                       )
                     ],
                   )),
@@ -219,7 +228,7 @@ ListView buildListView(List<JournalEntryViewModel> userEntries) {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Text(journalEntry.text,
                     style: const TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 20,
                     )),
               )

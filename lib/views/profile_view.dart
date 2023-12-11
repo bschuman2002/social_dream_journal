@@ -32,7 +32,7 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     List<JournalEntryViewModel> usersEntries =
         Provider.of<JournalListProvider>(context)
-            .getUsersEntries(widget.userId);
+            .getUsersEntries(widget.userId)..sort((a, b) => b.date.compareTo(a.date));
     return Container(
         alignment: Alignment.center,
         decoration: const BoxDecoration(

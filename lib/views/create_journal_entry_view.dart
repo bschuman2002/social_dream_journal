@@ -24,12 +24,14 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
   TextEditingController _sleepscore = TextEditingController();
   bool checkboxValue = false;
   late bool _privacy;
+  late bool _error;
 
   @override
   void initState() {
     dateInput.text = ""; //set the initial value of text field
     super.initState();
     _privacy = false;
+    _error = false;
   }
 
   @override
@@ -65,6 +67,10 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
                 _sleepScore(),
                 privacySwitch(),
                 SizedBox(height: 10,),
+                Text(
+                  _error ? "Sleep Score Must between 1 and 10" : "",
+                  style: const TextStyle(color: Colors.red),
+                ),
                 _submit(),
               ],
             ),
@@ -114,7 +120,18 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
     return Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 60, bottom: 20),
         child: TextField(
-          style: TextStyle(color: Colors.white54),
+          onChanged: (value) {
+            if(int.parse(value) > 10 || int.parse(value) < 1) {
+              setState(() {
+                _error = true;
+              });
+            } else {
+              setState(() {
+                _error = false;
+              });
+            }
+          },
+          style: TextStyle(color: Colors.white),
           controller: _sleepscore,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
@@ -131,26 +148,34 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(backgroundColor: Color.fromRGBO(143, 148, 251, 1)),
       onPressed: () {
-        JournalEntry newEntry = JournalEntry(
-            id: Provider.of<JournalListProvider>(context, listen: false)
-                    .allEntries
-                    .length +
-                1,
-            userId: Provider.of<JournalListProvider>(context, listen: false)
-                .currentUser
-                .id,
-            date: DateTime.parse(dateInput.text),
-            privacy: _privacy,
-            sleepScore: int.parse(_sleepscore.text),
-            text: _Textcontroller.text);
-        Provider.of<JournalListProvider>(context, listen: false)
-            .addEntry(newEntry);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => journal_entry_view(
-                  entry: JournalEntryViewModel(journalEntry: newEntry))),
-        );
+        if (int.parse(_sleepscore.text) > 10 ||
+            int.parse(_sleepscore.text) < 1) {
+          JournalEntry newEntry = JournalEntry(
+              id: Provider
+                  .of<JournalListProvider>(context, listen: false)
+                  .allEntries
+                  .length +
+                  1,
+              userId: Provider
+                  .of<JournalListProvider>(context, listen: false)
+                  .currentUser
+                  .id,
+              date: DateTime.parse(dateInput.text),
+              privacy: _privacy,
+              sleepScore: int.parse(_sleepscore.text),
+              text: _Textcontroller.text);
+          Provider.of<JournalListProvider>(context, listen: false)
+              .addEntry(newEntry);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    journal_entry_view(
+                        entry: JournalEntryViewModel(journalEntry: newEntry))),
+          );
+        } else {
+
+        }
       },
       child: Text("Create Dream Entry", style: TextStyle(color: Colors.white),)
     );

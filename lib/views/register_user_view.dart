@@ -139,6 +139,7 @@ class _CreateAccount extends State<CreateAccount> {
                                               color: Color.fromRGBO(
                                                   143, 148, 251, 1)))),
                                   child: TextFormField(
+                                    style: TextStyle(color: Colors.black),
                                     controller: username,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
@@ -155,6 +156,7 @@ class _CreateAccount extends State<CreateAccount> {
                                               color: Color.fromRGBO(
                                                   143, 148, 251, 1)))),
                                   child: TextField(
+                                    style: TextStyle(color: Colors.black),
                                     controller: password,
                                     obscureText: true,
                                     decoration: InputDecoration(
@@ -167,6 +169,7 @@ class _CreateAccount extends State<CreateAccount> {
                                 Container(
                                   padding: EdgeInsets.all(8.0),
                                   child: TextFormField(
+                                    style: TextStyle(color: Colors.black),
                                     onChanged: (value) {
                                       if(!passwordsMatch()) {
                                         setState(() {

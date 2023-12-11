@@ -210,6 +210,7 @@ ListView buildListView(List<JournalEntryViewModel> userEntries) {
                           style: const TextStyle(
                               color: Colors.white,
                               decoration: TextDecoration.underline,
+                              decorationColor: Colors.white,
                               fontSize: 25)),
                       Padding(
                         padding: const EdgeInsets.only(right: 20),

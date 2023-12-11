@@ -116,7 +116,7 @@ class SocialFeed extends StatelessWidget {
   ListView buildListView(List<JournalEntryViewModel> followingList) {
     return ListView.builder(
       scrollDirection: Axis.vertical,
-      itemCount: followingList.length < 4 ? followingList.length : 4,
+      itemCount: followingList.length,
       itemBuilder: (context, index) {
         final journalEntry = followingList[index];
 

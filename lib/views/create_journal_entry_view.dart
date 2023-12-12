@@ -121,7 +121,7 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
         padding: const EdgeInsets.only(left: 20.0, right: 60, bottom: 20),
         child: TextField(
           onChanged: (value) {
-            if(int.parse(value) > 10 || int.parse(value) < 1) {
+            if(int.parse(_sleepscore.text) > 10 || int.parse(_sleepscore.text) < 1) {
               setState(() {
                 _error = true;
               });
@@ -148,8 +148,8 @@ class _create_journal_entry_view extends State<create_journal_entry_view> {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(backgroundColor: Color.fromRGBO(143, 148, 251, 1)),
       onPressed: () {
-        if (int.parse(_sleepscore.text) > 10 ||
-            int.parse(_sleepscore.text) < 1) {
+        if (int.parse(_sleepscore.text) < 10 ||
+            int.parse(_sleepscore.text) > 1) {
           JournalEntry newEntry = JournalEntry(
               id: Provider
                   .of<JournalListProvider>(context, listen: false)

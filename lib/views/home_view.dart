@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:social_dream_journal/models/journal_entry.dart';
 import 'package:social_dream_journal/viewmodels/journal_entry_view_model.dart';
 import 'package:social_dream_journal/views/create_journal_entry_view.dart';
+import 'package:social_dream_journal/views/login_view.dart';
 import 'package:social_dream_journal/widgets/navbar.dart';
 import 'package:social_dream_journal/viewmodels/journal_entry_list_view_model.dart';
 import 'journal_entry_view.dart';
@@ -56,6 +58,9 @@ class HomeView extends StatelessWidget {
           ),
           child:
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Padding(
+                padding: EdgeInsets.only(left: 20, right: 250, top: 50),
+                child:logout(context)),
           _homeAndAdd(context),
           SizedBox(height: 30),
           _subtitle(),
@@ -66,6 +71,37 @@ class HomeView extends StatelessWidget {
           ),
         ])),
         bottomNavigationBar: const NavBar(pageIndex: 0));
+  }
+
+  GestureDetector logout(BuildContext context) {
+    return GestureDetector(
+              onTap: () {
+                Provider.of<JournalListProvider>(context, listen: false).logOut();
+                Navigator.of(context)
+                    .pushAndRemoveUntil(
+                  CupertinoPageRoute(
+                      builder: (context) => LoginView()
+                  ),
+                      (_) => false,
+                );
+              },
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient: LinearGradient(colors: [
+                      Color.fromRGBO(143, 148, 251, 1),
+                      Color.fromRGBO(143, 148, 251, .6),
+                    ])),
+                child: Center(
+                  child: Text(
+                    "Log Out",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ));
   }
 
   FloatingActionButton _FloatingActionButton(BuildContext context) {
@@ -124,7 +160,7 @@ class HomeView extends StatelessWidget {
 
   Container _homeTitleList() {
     return Container(
-      padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 16.0),
+      padding: EdgeInsets.only(top: 25.0, left: 20.0, right: 16.0),
       child: Text(
         'Home',
         style: TextStyle(fontSize: 30),

@@ -65,6 +65,10 @@ class JournalListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void logOut() {
+    currentUserFollowingList = [];
+  }
+
   List<JournalEntryViewModel> getUsersEntries(int id) {
     List<JournalEntryViewModel> entries = [];
 
